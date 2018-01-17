@@ -1,0 +1,401 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>LSST Scheduler &mdash; LSST Scheduler unknown documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="LSST Scheduler unknown documentation" href="index.html"/>
+        <link rel="next" title="Driver API" href="driver.html"/>
+        <link rel="prev" title="Usage" href="usage.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> LSST Scheduler
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                unknown
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">LSST Scheduler</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#scheduler-configuration-parameters">Scheduler configuration parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#scheduler-submodules">Scheduler submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#observatory">Observatory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#environment">Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#downtime">Downtime</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#driver">Driver</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#survey">Survey</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#proposal">Proposal</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="driver.html">Driver API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">History</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/lsst.ts.scheduler.html">lsst.ts.scheduler</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">LSST Scheduler</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>LSST Scheduler</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/scheduler.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="lsst-scheduler">
+<span id="scheduler-label"></span><h1>LSST Scheduler<a class="headerlink" href="#lsst-scheduler" title="Permalink to this headline">¶</a></h1>
+<p>The LSST Scheduler is a complex software that relies on a series of submodules for properly functioning. Some of them
+provides the interface with the (S)OCS while others provides access to crucial telemetry information, about the system
+and the environment.</p>
+<div class="section" id="scheduler-configuration-parameters">
+<span id="config-label"></span><h2>Scheduler configuration parameters<a class="headerlink" href="#scheduler-configuration-parameters" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="scheduler-submodules">
+<span id="submodules-label"></span><h2>Scheduler submodules<a class="headerlink" href="#scheduler-submodules" title="Permalink to this headline">¶</a></h2>
+<p>Most of these submodules are configured at the initialization process and thus relies on the
+scheduler interface for properly functioning. A list of these submodules with initialization parameters is provided
+here. Some of these submodules are functional (a.k.a. the scheduler uses them as telemetry input or else) others are
+responsible for setting up the survey and scheduling algorithms.</p>
+<div class="section" id="observatory">
+<h3>Observatory<a class="headerlink" href="#observatory" title="Permalink to this headline">¶</a></h3>
+<p>The observatory module provides an interface to telemetry for both the real and simulated observatory. The scheduler
+uses this module to take information from the system and to estimate things like slew time and telescope limits.
+Setting up and function of this module should be seamless whether it is a simulation or real operation.</p>
+<p>This module encapsulates the following sub-modules;</p>
+<blockquote>
+<div><ul class="simple">
+<li>Telescope</li>
+<li>Dome</li>
+<li>Rotator</li>
+<li>Camera</li>
+<li>Filters</li>
+<li>Slew</li>
+<li>OpticsLoopCorr</li>
+<li>Park</li>
+<li>ObservatoryVariation</li>
+</ul>
+</div></blockquote>
+<p>For use in the API the user should refer to the
+<a class="reference external" href="https://github.com/lsst-ts/ts_observatory_model">observatory model class</a>. Inside the scheduler <code class="docutils literal"><span class="pre">Driver</span></code>, this
+module is accessed as <code class="docutils literal"><span class="pre">observatoryModel</span></code> and <code class="docutils literal"><span class="pre">observatoryModel2</span></code>, ultimately both instances are
+synchronized to the (S)OCS observatory (model or real). The first instance is used for main synchronization while the
+latter for secondary tests. So, for checking if a target/sequence is reachable and observable the user should use
+<code class="docutils literal"><span class="pre">observatoryModel2</span></code> and for telemetry information <code class="docutils literal"><span class="pre">observatoryModel</span></code>. There’s also a <code class="docutils literal"><span class="pre">observatoryState</span></code> instance
+which, as the name suggests, tracks the state of the observatory, which is also synchronized with the main (S)OCS
+observatory state.</p>
+</div>
+<div class="section" id="environment">
+<h3>Environment<a class="headerlink" href="#environment" title="Permalink to this headline">¶</a></h3>
+<p>These modules provides interface to environmental telemetry information gathered directly from (S)OCS through the
+middleware communication layer. Right now the following information is available to the scheduler, and should be
+updated soon to account for other information.</p>
+<blockquote>
+<div><ul class="simple">
+<li>Seeing - Single value from seeing monitor (arcseconds). Accessed through <code class="docutils literal"><span class="pre">seeing</span></code>.</li>
+<li>Cloud - Single value from cloud monitor. This should eventually be a 2d map. Accessed through <code class="docutils literal"><span class="pre">cloud</span></code>.</li>
+<li>Transparency - Not available</li>
+<li>Sky brightness - Not available</li>
+<li>Wind - Not available</li>
+<li>Temperatures - Not available</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="downtime">
+<h3>Downtime<a class="headerlink" href="#downtime" title="Permalink to this headline">¶</a></h3>
+<p>These modules provides interface for scheduled and unscheduled downtime. On simulations unscheduled downtime are
+generated randonly and the scheduler automatically responds by stopping operations until further notice.</p>
+<p>Right now, there’s no interface for downtime in the scheduler API.</p>
+</div>
+<div class="section" id="driver">
+<h3>Driver<a class="headerlink" href="#driver" title="Permalink to this headline">¶</a></h3>
+<p>The scheduler driver is the main piece of software responsible for connecting the scheduling algorithms with the
+(S)OCS. This module provides the basic logic for configuring “the survey”, which is represented by a set of
+“proposals”. The driver also provides an interface for the aforementioned telemetry stream that can be organized in
+anyway needed by the algorithm being used (as long as the information is available to the Driver).</p>
+<p>Currently, the driver receives a set of configurations that are particular to the way the current scheduling algorithm
+works and may be updated soon to be more general. The set of available parameters are:</p>
+<blockquote>
+<div><ul class="simple">
+<li>coadd_values: Flag to determine if two identical field/filter targets have their ranks added and then
+considered as one target.</li>
+<li>time_balancing: Flag to detemine if cross-proposal time-balancing is used.</li>
+<li>timecost_time_max: The slew time (units=seconds) where the time cost value equals one.</li>
+<li>timecost_time_ref: The reference slew time (units=seconds) that sets the steepness of the cost function.</li>
+<li>timecost_cost_ref: The cost value associated with the time cost reference slew time.</li>
+<li>timecost_weight: The weighting value to apply to the slew time cost function result.</li>
+<li>filtercost_weight: The weighting value to apply to the filter change cost function result.</li>
+<li>propboost_weight: The weighting value to apply to the time balancing equations. This parameter should be
+greater than or equal to zero.</li>
+<li><strong>night_boundary:</strong> Solar altitude (degrees) when it is considered night.</li>
+<li><strong>new_moon_phase_threshold:</strong> New moon phase threshold for swapping to dark time filter.</li>
+<li>ignore_sky_brightness: Flag to ignore sky brightness limits when rejecting targets.</li>
+<li>ignore_airmass: Flag to ignore airmass limits when rejecting targets.</li>
+<li>ignore_clouds: Flag to ignore cloud limits when rejecting targets.</li>
+<li>ignore_seeing: Flag to ignore seeing limits when rejecting targets.</li>
+</ul>
+</div></blockquote>
+<p>Parameters in bold face are those that are more likely to be kept for more general driver configuration. Or, this list
+could be replaced by a single configuration file in any format that needs to be unpacked and configured by the driver.</p>
+</div>
+<div class="section" id="survey">
+<h3>Survey<a class="headerlink" href="#survey" title="Permalink to this headline">¶</a></h3>
+<p>This set of parameters are used at several levels for the scheduler and part of the simulation environment. For real
+operation the simulation configuration will likely be dropped of but the scheduler part will still be needed. Some
+of this parameters are particular to the current scheduler algorithm, and will be generalized for working with the API.</p>
+<p>The set of available parameters are:</p>
+<blockquote>
+<div><ul class="simple">
+<li>start_date: This parameter is used to configure the simulation, setting up the start date of the simulation.
+Specially it is used on several other instances to configure a <code class="docutils literal"><span class="pre">TimeHandler</span></code> class on SOCS. On normal operation
+this will be accessed through the telemetry stream and this parameter will probably be unused.</li>
+<li>duration: This parameter is used both on the simulation but also exposed to the scheduler and the driver through
+<code class="docutils literal"><span class="pre">survey_duration_DAYS</span></code>.</li>
+<li>idle_delay: Basically used to configure the behaviour of the simulation in case no valid target is generated by
+the scheduler.</li>
+<li>general_proposals: The list of available general proposals.</li>
+<li>sequence_proposals = The list of available sequence proposals.</li>
+<li>alt_proposal_dir = An alternative directory location for proposals.</li>
+</ul>
+</div></blockquote>
+<p>Note that “general_proposals” and “sequence_proposals” are very particular to the current scheduler algorithms. The
+idea is that they are going to be generalized to a single “proposals” statement, and that this general type of proposal
+gathers only the basic information needed to configure a specific proposal, regardless of the scheduling algorithm
+used. One must be aware that a proposal require some basic information to be passed to the scheduler (and then to the
+OCS). Even if the scheduling algorithm implemented does not internally uses the same logic, it is important to make
+this translation so that the proper information is passed to the (S)OCS.</p>
+</div>
+<div class="section" id="proposal">
+<h3>Proposal<a class="headerlink" href="#proposal" title="Permalink to this headline">¶</a></h3>
+<p>A Proposal is where algorithm information regarding each of the different science projects being executed on the
+observatory are stored and translated into an observational strategy. There exists a number of different ways of doing
+target selection. This object make sure any algorithm must generate and contain a certain number of information for
+internal bookkeeping. It also provides an interface for configuration through the middleware.</p>
+<p>Right now this configuration is done in a way very particular to the scheduling algorithm used by the scheduler and
+will be generalized to accommodate different algorithms. Also, right now there are two different kinds of Proposals
+with different sets of parameters (general and sequence proposals). In the future there will be a single kind of
+proposal and, likely, a string will be passed which can contain a configuration file (or other configuration method).</p>
+<p>These are the parameters currently used to configure a general proposal:</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>name:</strong> Name for the proposal.</li>
+<li>sky_region: Sky region selection for the proposal.</li>
+<li>sky_exclusion: Sky region selection for the proposal.</li>
+<li>sky_nightly_bounds: Sky region selection for the proposal.</li>
+<li>sky_constraints: Sky region selection for the proposal.</li>
+<li><strong>filters:</strong> Filter configuration for the proposal.</li>
+<li><em>scheduling:</em> Scheduling configuration for the proposal.</li>
+</ul>
+</div></blockquote>
+<p>Parameters in <strong>bold</strong> letters are those likely to be kept for a general proposal. The <em>scheduling</em> parameter will
+likely be re-purposed and host a string to be passed to Driver containing a configuration file (either parameter list
+or other configuration method).</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="driver.html" class="btn btn-neutral float-right" title="Driver API" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="usage.html" class="btn btn-neutral" title="Usage" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Francisco Delgado.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'unknown',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

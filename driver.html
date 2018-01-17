@@ -1,0 +1,531 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Driver API &mdash; LSST Scheduler unknown documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="LSST Scheduler unknown documentation" href="index.html"/>
+        <link rel="next" title="Credits" href="authors.html"/>
+        <link rel="prev" title="LSST Scheduler" href="scheduler.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> LSST Scheduler
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                unknown
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scheduler.html">LSST Scheduler</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Driver API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#telemetry">Telemetry</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#proposals">Proposals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#target">Target</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#proposing-targets">Proposing targets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#validating-targets">Validating targets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#operation-workflow">Operation workflow</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">History</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/lsst.ts.scheduler.html">lsst.ts.scheduler</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">LSST Scheduler</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Driver API</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/driver.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="driver-api">
+<h1>Driver API<a class="headerlink" href="#driver-api" title="Permalink to this headline">¶</a></h1>
+<p>The operation of the LSST scheduler follow a set of rules that flow down for a series of documents. Most of the inner
+operational workings of the scheduler (access to telemetry stream, middleware communication, etc) can be generalized,
+enabling it to be connected to virtually any target selection algorithm. Even in these cases, a set of rules must be
+followed to enable the proper function and logging of the observations to the database. These rules are described here
+to ease the development of new algorithms.</p>
+<div class="figure align-center" id="id2">
+<span id="driver-figure"></span><a class="reference internal image-reference" href="_images/driver.jpg"><img alt="Driver diagram" src="_images/driver.jpg" style="width: 360.0px; height: 330.5px;" /></a>
+<p class="caption"><span class="caption-text">Diagram showing the Driver data structure and all available methods. Not all properties of the class are showed here,
+only the most important ones.</span></p>
+</div>
+<p>Before proceeding make sure you read and understand the <a class="reference internal" href="scheduler.html#scheduler-label"><span class="std std-ref">LSST Scheduler</span></a> section.</p>
+<div class="section" id="configuration">
+<span id="configuratin-sec"></span><h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
+<p>When starting a run, the scheduler is handled a series of configuration parameters to configure its submodules and the
+scheduling algorithm (this later may change in the future for external scheduling algorithms). Some of the
+configuration methods are quite self-explanatory and won’t be expanded here, others have some subtleties and require
+some explanation (given furthermore). In some cases, there are planned changes in the near future to accommodate
+external scheduling algorithms while other are module-related and will likely be kept unchanged. If nothing is said,
+assume no change will be made or will be required. The sequence of calls is as follows:</p>
+<ol class="arabic">
+<li><p class="first"><code class="docutils literal"><span class="pre">configure_duration</span></code>: Receives the duration of the survey in days. In the future, this could be moved to the next
+item in the list.</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">configure</span></code>: This method is used to configure some of the driver behaviour. The way it is right now, some
+of those parameters are related to the current scheduling algorithm and will be taken off. Others are more
+general parameters regarding the actual driver behaviour. The list of parameters is:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">coadd_values</span></code></li>
+<li><code class="docutils literal"><span class="pre">time_balancing</span></code></li>
+<li><code class="docutils literal"><span class="pre">timecost_dc</span></code></li>
+<li><code class="docutils literal"><span class="pre">timecost_dt</span></code></li>
+<li><code class="docutils literal"><span class="pre">timecost_k</span></code></li>
+<li><code class="docutils literal"><span class="pre">timecost_weight</span></code></li>
+<li><code class="docutils literal"><span class="pre">night_boundary</span></code> *</li>
+<li><code class="docutils literal"><span class="pre">ignore_sky_brightness</span></code></li>
+<li><code class="docutils literal"><span class="pre">ignore_airmass</span></code></li>
+<li><code class="docutils literal"><span class="pre">ignore_clouds</span></code></li>
+<li><code class="docutils literal"><span class="pre">ignore_seeing</span></code></li>
+<li><code class="docutils literal"><span class="pre">new_moon_phase_threshold</span></code> *</li>
+</ul>
+</div></blockquote>
+<p>Parameters marked with an * are more general-behaviour and more likely to be kept. The others are particular to the
+current scheduler algorithm and may be removed.</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">configure_location</span></code>: Configures the observatory location submodule.</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">configure_telescope</span></code>: Configures the internal telescope kinematic models. There are two kinematic models inside
+driver. One provides access to telemetry and is synchronized with the telescope module, the other is used to check
+the telescope limits (see <a class="reference internal" href="#prop-targets-sec"><span class="std std-ref">Proposing targets</span></a> for further details).</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">configure_dome</span></code>:</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">configure_rotator</span></code>:</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">configure_camera</span></code>:</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">configure_slew</span></code>: This method configures the properties of telescope slew. Basically it states the actions
+required for a slew operation and how they must be performed. In combination with the kinematic model it enables the
+observatory model to properly estimate the slew time.</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">configure_optics</span></code>:</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">configure_park</span></code>:</p>
+</li>
+</ol>
+<p>The next step in the process is configuring the <a class="reference internal" href="#prop-sec"><span class="std std-ref">Proposals</span></a>. The procedure is designed to configure the current
+scheduler algorithm and does not consider or allow too much freedom in the process. To start with, there is one call
+to one of two different methods (<code class="docutils literal"><span class="pre">create_area_proposal</span></code> or <code class="docutils literal"><span class="pre">create_sequence_proposal</span></code>), for each proposal,
+depending on the proposal type (either General or Sequence), each using a different set of parameters. Right now this
+is one of the most critical parts on the development of the Driver-API. The main reason is
+that SOCS reads the configuration for each proposal and internally configures the proposals accordingly generating, for
+instance, a list of proposals and a list of fields per proposal. Then, the configuration is handled to the scheduler
+which should generate the same list of fields and so on.</p>
+<p>Our approach to the Drive-API configuration will be to make a single call to a <code class="docutils literal"><span class="pre">configure_proposals</span></code> method
+responsible for setting up the entire process. Then, (S)OCS will get the required information about the configured
+proposals using the middleware communication.</p>
+<p>It is important to note that, for this process to work, the <code class="docutils literal"><span class="pre">Proposals</span></code> needs to be properly set by the Driver.</p>
+</div>
+<div class="section" id="telemetry">
+<span id="telemetry-sec"></span><h2>Telemetry<a class="headerlink" href="#telemetry" title="Permalink to this headline">¶</a></h2>
+<p>A telemetry stream is available to the scheduler with crucial information regarding the state of the observatory
+(telescope, camera, etc), environment (seeing, wind, clouds, sky brightness, etc), data quality and so on. During
+real operations there is going to be a mix of real and simulated data that the scheduler uses. For instance, the
+scheduler has access to information about the current state of the observatory as well as to an updated observatory
+model that is capable of estimating slew times between different states. While the first is provided to the scheduler
+using the DDS/SAL telemetry stream, the later is computed internally and made available to the scheduling algorithm
+with an appropriate interface.</p>
+<p>The scheduler itself also produces telemetry information that needs to be sent to the system for proper logging. Part
+of it is done with using the <a class="reference internal" href="#prop-sec"><span class="std std-ref">Proposals</span></a> and <a class="reference internal" href="#target-sec"><span class="std std-ref">Target</span></a> interfaces but there is also others; some will be
+handled directly by Driver (like informing the OCS of any issue with the scheduler or the lack of some telemetry
+data), others have a default behaviour in the Driver and can be easily overwritten by the user algorithm (like
+requesting for the u band filter to be swapped in to the carousel).</p>
+<p>Here is a list of the current telemetry information available on the Driver and how to access it. This list will be
+updated in the future as more information is made available. Some of this information can/need to be used by the
+scheduling algorithm for target selection others may be for the scheduler internal logic.</p>
+<ul>
+<li><p class="first"><code class="docutils literal"><span class="pre">location</span> <span class="pre">[lsst.ts.dateloc.ObservatoryLocation]</span></code>: The scheduler can access information regarding the site
+location using.</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">sunset_timestamp</span> <span class="pre">[float]</span></code>: The current sunset time stamp. Can be converted to MJD using
+<code class="docutils literal"><span class="pre">lsst.ts.dateloc.DateProfile</span></code>.</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">sunrise_timestamp</span> <span class="pre">[float]</span></code>: The current sunrise time stamp. Can be converted to MJD using
+<code class="docutils literal"><span class="pre">lsst.ts.dateloc.DateProfile</span></code>.</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">observatoryState</span> <span class="pre">[lsst.ts.observatory.model.ObservatoryState]</span></code>: The state of the observatory gathers general
+information about telescope position (alt/az), camera rotator angle, tracking and fail state, etc. This
+represents the state of the actual observatory (regardless of it being a simulation or real operation).</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">observatoryModel</span> <span class="pre">[lsst.ts.observatory.model.ObservatoryModel]</span></code>: Inside Driver there are two distinct
+models, a main model and a secondary model. This is the main observatory model and is always synchronized with the
+actual observatory, thus providing information regarding available filters, slew time estimates from current state
+to desired states and so on. This is the property that needs to be used for passing information to the scheduling
+algorithm when building the telemetry stream. Some important methods of this object are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">observatoryModel.dateprofile.mjd</span> <span class="pre">[float]</span></code>: Current MJD date.</li>
+<li><code class="docutils literal"><span class="pre">observatoryModel.dateprofile.lst_rad</span> <span class="pre">[float]</span></code>: Current LST in radians.</li>
+<li><code class="docutils literal"><span class="pre">observatoryModel.get_slew_delay(Target)</span> <span class="pre">[float]</span></code>: Compute slew time between current state and the state
+required by Target.</li>
+<li><code class="docutils literal"><span class="pre">observatoryModel.get_approximate_slew_delay(ra,</span> <span class="pre">dec,</span> <span class="pre">filter)</span> <span class="pre">[np.array]</span></code>: Compute approximate slew time
+between current state and (ra, dec, filter) combination (camera rotation is not considered yet).</li>
+</ul>
+</div></blockquote>
+<p>Look at the class definition to see other methods available.</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">observatoryModel2</span> <span class="pre">[lsst.ts.observatory.model.ObservatoryModel]</span></code>: The secondary observatory model available
+to the scheduler. This one is used internally to check that a state is valid to be acquired and tracked for
+a specified amount of time and, as such, may be unsynchronized with the observatory. For more information see
+<a class="reference internal" href="#prop-targets-sec"><span class="std std-ref">Proposing targets</span></a> and <a class="reference internal" href="#validate-targets-sec"><span class="std std-ref">Validating targets</span></a> sections.</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">seeing</span> <span class="pre">[float]</span></code>: This property provides the latest DIM seeing measurement in arcseconds. There’s currently no
+skymap for the seeing but on can compute and scale internally using some model.</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">cloud</span> <span class="pre">[float]</span></code>: The bulk cloud coverage measurement. There’s currently no skymap for clouds available to the
+scheduler.</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">wind</span> <span class="pre">[]</span></code>: TBD</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">temperatures</span> <span class="pre">[]</span></code>: TBD (needed?)</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">sky_brightness</span> <span class="pre">[]</span></code>: TBD. There’s currently no information regarding measured sky brightness to the scheduler, only
+internal models.</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">sky</span> <span class="pre">[lsst.ts.astrosky.model.AstronomicalSkyModel]</span></code>: This property gives access to a sky model, including sun/moon
+position and sky brightness model (using OpSim fields).</p>
+</li>
+</ul>
+<p>The telemetry information required by the OCS to be produced by the scheduler is:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">need_filter_swap</span> <span class="pre">[bool]</span></code>: Set to <code class="docutils literal"><span class="pre">True</span></code> when the scheduler requires a filter swap during daytime operations.</li>
+<li><code class="docutils literal"><span class="pre">filter_to_unmount</span> <span class="pre">[str]</span></code>: In case a filter swap is needed, specifies which filter should be unmounted. Note that there
+is a limit on the observatory to which filter can be unmounted (default to u, y and z).</li>
+<li><code class="docutils literal"><span class="pre">filter_to_mount</span> <span class="pre">[str]</span></code>: In case a filter swap is needed, specifies which filter should be mounted.</li>
+<li><code class="docutils literal"><span class="pre">select_next_target()</span> <span class="pre">[Target]</span></code>: Return a target to observe. See <a class="reference internal" href="#target-sec"><span class="std std-ref">Target</span></a>.</li>
+<li><code class="docutils literal"><span class="pre">register_observation()</span> <span class="pre">[list]</span></code>: Validates targets and return list of successfully completed observations.</li>
+</ul>
+</div>
+<div class="section" id="proposals">
+<span id="prop-sec"></span><h2>Proposals<a class="headerlink" href="#proposals" title="Permalink to this headline">¶</a></h2>
+<p>For the LSST Scheduler a Proposal represents the unity of a scientific project. It can be a survey of a region of the
+sky in a set of filters with a specific observational strategy, a set of fields or even targets of opportunity.
+Together with <a class="reference internal" href="#target-sec"><span class="std std-ref">Target</span></a> the Proposals are one of the main interfaces between the scheduler and the (S)OCS. They
+are used to inform (S)OCS about the science projects running on the telescope and to properly log the
+information required for each one of them. Optionally, they also store “project-wise” information such as weather and
+observational parameters. In order to enable these functionalities the Proposals needs to be properly set when
+configuring the Driver.</p>
+<p>Currently there are two different types of Proposals, <code class="docutils literal"><span class="pre">AreaDistributionProposal</span></code> and a <code class="docutils literal"><span class="pre">Sequence</span></code> proposal.
+But, they will be replaced by a single type of more general proposal.</p>
+<p>The minimum set of parameters needed for configuring a proposal are;</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">propid</span> <span class="pre">[int]</span></code>: A unique identifier that represents the proposal.</li>
+<li><code class="docutils literal"><span class="pre">name</span> <span class="pre">[str]</span></code>: The name of the proposal.</li>
+<li><code class="docutils literal"><span class="pre">confdict</span> <span class="pre">[dict]</span></code>: A dictionary with basic configuration parameters. The current structure of this dictionary is
+pretty much used by the current scheduler. It will probably change a lot for the Driver API.</li>
+<li><code class="docutils literal"><span class="pre">skymodel</span> <span class="pre">[SkyModel]</span></code>: This will probably be removed as it is unused by general algorithms.</li>
+</ul>
+<p>During the configuration procedure it is also important that the Proposals create a list of Fields that belong to it.</p>
+</div>
+<div class="section" id="target">
+<span id="target-sec"></span><h2>Target<a class="headerlink" href="#target" title="Permalink to this headline">¶</a></h2>
+<p>Change control documents LTS-347 specifies minimum parameters describing a target published by the scheduler.
+Those are;</p>
+<blockquote>
+<div><ul class="simple">
+<li>field ID, filter,</li>
+<li>list of proposals, list of sequence IDs, list of values, target rank</li>
+<li>part of a deep drilling event</li>
+<li>RA, Dec, Angle,</li>
+<li>number of exposures, list of exposure times,</li>
+<li>expected LST, mount-Alt, mount-Az, Rot, dome-Alt, dome-Az at start of first exposure</li>
+<li>expected maximum speeds for mount-Alt, mount-Az, Rot, dome-Alt, dome-Az during slew</li>
+<li>expected slew time</li>
+<li>expected airmass, sky brightness at start of first exposure</li>
+<li>expected seeing, transparency at start of first exposure</li>
+</ul>
+</div></blockquote>
+<p>The current implementation of the scheduler uses a slight more complex data structure. This can be seen on the figure
+bellow.</p>
+<div class="figure align-center" id="id3">
+<span id="target-figure"></span><a class="reference internal image-reference" href="_images/target.jpg"><img alt="Target diagram" src="_images/target.jpg" style="width: 607.0px; height: 325.5px;" /></a>
+<p class="caption"><span class="caption-text">Diagram showing the Target data structure and available methods.</span></p>
+</div>
+<p>See <a class="reference internal" href="#prop-targets-sec"><span class="std std-ref">Proposing targets</span></a> section to check how this class needs to be populated.</p>
+</div>
+<div class="section" id="proposing-targets">
+<span id="prop-targets-sec"></span><h2>Proposing targets<a class="headerlink" href="#proposing-targets" title="Permalink to this headline">¶</a></h2>
+<p>Proposing a target to be observed by (S)OCS is done using a function call to <cite>Driver.select_next_target()</cite>. This
+function receives no argument and should return an object of the type <code class="docutils literal"><span class="pre">Target</span></code>. Updating the timestamp and other
+internal telemetry information is done before a call to this function by (S)OCS. Check the <a class="reference internal" href="#telemetry-sec"><span class="std std-ref">Telemetry</span></a> for
+information about available telemetry and <a class="reference internal" href="#op-flow-sec"><span class="std std-ref">Operation workflow</span></a> to see how this is updated.</p>
+<p>When using a custom made algorithm <code class="docutils literal"><span class="pre">select_next_target()</span></code> is responsible for organizing the telemetry in a way the
+algorithm understand, get an appropriate target for observation, convert that target to a <a class="reference internal" href="#target-sec"><span class="std std-ref">Target</span></a>
+object, make sure it can be observed and finally returning a valid <a class="reference internal" href="#target-sec"><span class="std std-ref">Target</span></a>.</p>
+<p>When generating the returned object the following information needs to be included.</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">targetid</span> <span class="pre">[int]</span></code>: This is a counter that needs to be incremented every time a target is successfully generated. If,
+for any reason an observation is unsuccessful, it needs to be properly reset.</li>
+<li><code class="docutils literal"><span class="pre">fieldid</span> <span class="pre">[int]</span></code>: The id of the field as in the OpSim database.</li>
+<li><code class="docutils literal"><span class="pre">filter</span> <span class="pre">[str]</span></code>: The filter to be observed.</li>
+<li><code class="docutils literal"><span class="pre">num_exp</span> <span class="pre">[int]</span></code>: The number of exposures.</li>
+<li><code class="docutils literal"><span class="pre">exp_time</span> <span class="pre">[list]</span></code>: A list with the exposure time for each exposure (must match <code class="docutils literal"><span class="pre">num_exp</span></code>.</li>
+<li><code class="docutils literal"><span class="pre">ra_rad</span> <span class="pre">[float]</span></code>: RA of the observation in radians. It can be different from the original OpSim field, useful for
+dithering patterns.</li>
+<li><code class="docutils literal"><span class="pre">dec_rad</span> <span class="pre">[float]</span></code>: Dec of the observation in radians. It can be different from the original OpSim field, useful for
+dithering patterns.</li>
+<li><code class="docutils literal"><span class="pre">ang_rad</span> <span class="pre">[float]</span></code>: Position angle of the observation in radians.</li>
+<li><code class="docutils literal"><span class="pre">prop_id</span> <span class="pre">[int]</span></code>: The proposal id for which this observation is part of.</li>
+<li><code class="docutils literal"><span class="pre">slewtime</span> <span class="pre">[float]</span></code>: Estimated slew time in seconds.</li>
+<li><code class="docutils literal"><span class="pre">skybrightness</span> <span class="pre">[float]</span></code>: Estimated sky brightness for this observation.</li>
+<li><code class="docutils literal"><span class="pre">airmass</span> <span class="pre">[float]</span></code>: Estimated airmass.</li>
+<li><code class="docutils literal"><span class="pre">seeing</span> <span class="pre">[float]</span></code>: Estimated seeing.</li>
+<li><code class="docutils literal"><span class="pre">cloud</span> <span class="pre">[int]</span></code>: Estimated cloud.</li>
+</ul>
+<p>Once Target is setup with this basic information, it can be validated using the secondary observatory model. This is
+done with the following call:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">observatoryModel2</span><span class="o">.</span><span class="n">set_state</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">observatoryState</span><span class="p">)</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">observatoryModel2</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">use_telrot</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>What this does is to synchronize the secondary observatory model with the current observatory state (including the
+current timestamp) and them try to perform the observation. In case of success, <code class="docutils literal"><span class="pre">target</span></code> will be properly filled with
+information regarding the (estimated) telescope state. If if fails, <code class="docutils literal"><span class="pre">target.slewtime</span></code> will be set to <code class="docutils literal"><span class="pre">-1</span></code> and
+<code class="docutils literal"><span class="pre">observatoryModel2.current_state</span></code> will harbor information regarding why it failed. One of the most common sources of
+failed observations is hitting a rotation angle limit. The <code class="docutils literal"><span class="pre">Driver</span></code> must be able to respond to this kind of
+behaviour and other sources of failed observations as well. If an invalid observation is send to the OCS, the
+observation will be skipped and the simulation stepped into the future. On the real case scenario there’s probably be
+going to issue an alert to the operator and operation will be paused.</p>
+</div>
+<div class="section" id="validating-targets">
+<span id="validate-targets-sec"></span><h2>Validating targets<a class="headerlink" href="#validating-targets" title="Permalink to this headline">¶</a></h2>
+<p>Once a <code class="docutils literal"><span class="pre">target</span></code> is proposed to the (S)OCS it will try to acquire the observation. In the simulation environment, this
+basically involves a call to <code class="docutils literal"><span class="pre">observe</span></code> in its internal observatory model. On real operations, that will required a
+complete set of actual operations. Regardless of the operation mode, at the end, (S)OCS will validate the
+observation. This is done by a call to the function <code class="docutils literal"><span class="pre">Driver.register_observation(observation)</span></code>, where <code class="docutils literal"><span class="pre">observation</span></code>
+is of the type <code class="docutils literal"><span class="pre">Target</span></code>. If (S)OCS could complete the observation successfully <code class="docutils literal"><span class="pre">observation.targetid</span></code> will be equal
+to the <code class="docutils literal"><span class="pre">target.targetid</span></code> of the proposed target. The observation failed otherwise (usually with
+<code class="docutils literal"><span class="pre">observation.targetid</span> <span class="pre">=</span> <span class="pre">-1</span></code>.</p>
+<p>The default behavior of validating a target performs internal logging on <code class="docutils literal"><span class="pre">Driver</span></code> and on <code class="docutils literal"><span class="pre">Proposals</span></code>. If one
+requires custom operations it is important to also call the <code class="docutils literal"><span class="pre">Driver</span></code>’s superclass function as well for proper
+operation.</p>
+</div>
+<div class="section" id="operation-workflow">
+<span id="op-flow-sec"></span><h2>Operation workflow<a class="headerlink" href="#operation-workflow" title="Permalink to this headline">¶</a></h2>
+<p>A high level representation of the operation workflow is given here. It is assumed that all configuration steps where
+successfully completed and that the scheduler is ready to start serving targets. The workflow is break down into
+different levels for better understanding. We start with the workflow from the (S)OCS point of view and then from the
+scheduler point of view and then a unified workflow.</p>
+<div class="figure align-center" id="id4">
+<span id="id1"></span><a class="reference internal image-reference" href="_images/socs_workflow.jpg"><img alt="SOCS workflow" src="_images/socs_workflow.jpg" style="width: 350.0px; height: 343.5px;" /></a>
+<p class="caption"><span class="caption-text">Diagram showing (S)OCS operation workflow. A telephone and arrow indicates when there is a communication going on
+through the DDS/SAL communication middleware layer. An up arrow indicates information being broadcast and an
+arrow down information being read.</span></p>
+</div>
+<div class="figure align-center" id="id5">
+<span id="scheduler-figure"></span><a class="reference internal image-reference" href="_images/scheduler_workflow.jpg"><img alt="Scheduler workflow" src="_images/scheduler_workflow.jpg" style="width: 347.0px; height: 488.5px;" /></a>
+<p class="caption"><span class="caption-text">Diagram showing Scheduler operation workflow.</span></p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="authors.html" class="btn btn-neutral float-right" title="Credits" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="scheduler.html" class="btn btn-neutral" title="LSST Scheduler" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Francisco Delgado.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'unknown',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
