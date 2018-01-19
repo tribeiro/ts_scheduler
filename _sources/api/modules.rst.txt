@@ -1,0 +1,7 @@
+lsst
+====
+
+.. toctree::
+   :maxdepth: 4
+
+   lsst

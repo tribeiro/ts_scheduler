@@ -1,0 +1,861 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>lsst.ts.scheduler.proposals.time_distribution &mdash; LSST Scheduler unknown documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="LSST Scheduler unknown documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> LSST Scheduler
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                unknown
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../scheduler.html">LSST Scheduler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../driver.html">Driver API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../history.html">History</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../api/lsst.ts.scheduler.html">lsst.ts.scheduler package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../index.html">LSST Scheduler</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>lsst.ts.scheduler.proposals.time_distribution</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for lsst.ts.scheduler.proposals.time_distribution</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">object</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">range</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
+
+<span class="kn">from</span> <span class="nn">operator</span> <span class="k">import</span> <span class="n">itemgetter</span>
+
+<span class="kn">from</span> <span class="nn">lsst.ts.scheduler.setup</span> <span class="k">import</span> <span class="n">EXTENSIVE</span>
+<span class="kn">from</span> <span class="nn">lsst.ts.scheduler.kernel</span> <span class="k">import</span> <span class="n">Field</span>
+<span class="kn">from</span> <span class="nn">lsst.ts.scheduler.proposals</span> <span class="k">import</span> <span class="n">Proposal</span>
+<span class="kn">from</span> <span class="nn">lsst.ts.scheduler.proposals.sequence</span> <span class="k">import</span> <span class="n">Sequence</span>
+
+<div class="viewcode-block" id="TimeDistributionProposalParameters"><a class="viewcode-back" href="../../../../../api/lsst.ts.scheduler.proposals.html#lsst.ts.scheduler.proposals.time_distribution.TimeDistributionProposalParameters">[docs]</a><span class="k">class</span> <span class="nc">TimeDistributionProposalParameters</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">confdict</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">sky_region</span> <span class="o">=</span> <span class="n">confdict</span><span class="p">[</span><span class="s2">&quot;sky_region&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sky_exclusions</span> <span class="o">=</span> <span class="n">confdict</span><span class="p">[</span><span class="s2">&quot;sky_exclusions&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sky_nightly_bounds</span> <span class="o">=</span> <span class="n">confdict</span><span class="p">[</span><span class="s2">&quot;sky_nightly_bounds&quot;</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_airmass</span> <span class="o">=</span> <span class="n">confdict</span><span class="p">[</span><span class="s2">&quot;constraints&quot;</span><span class="p">][</span><span class="s2">&quot;max_airmass&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_cloud</span> <span class="o">=</span> <span class="n">confdict</span><span class="p">[</span><span class="s2">&quot;constraints&quot;</span><span class="p">][</span><span class="s2">&quot;max_cloud&quot;</span><span class="p">]</span>
+        <span class="n">max_zd_rad</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">acos</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_airmass</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">min_alt_rad</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">max_zd_rad</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">min_distance_moon_rad</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">confdict</span><span class="p">[</span><span class="s2">&quot;constraints&quot;</span><span class="p">][</span><span class="s2">&quot;min_distance_moon&quot;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">exclude_planets</span> <span class="o">=</span> <span class="n">confdict</span><span class="p">[</span><span class="s2">&quot;constraints&quot;</span><span class="p">][</span><span class="s2">&quot;exclude_planets&quot;</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_num_targets</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">confdict</span><span class="p">[</span><span class="s2">&quot;scheduling&quot;</span><span class="p">][</span><span class="s2">&quot;max_num_targets&quot;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">accept_serendipity</span> <span class="o">=</span> <span class="n">confdict</span><span class="p">[</span><span class="s2">&quot;scheduling&quot;</span><span class="p">][</span><span class="s2">&quot;accept_serendipity&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">accept_consecutive_visits</span> <span class="o">=</span> <span class="n">confdict</span><span class="p">[</span><span class="s2">&quot;scheduling&quot;</span><span class="p">][</span><span class="s2">&quot;accept_consecutive_visits&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">restart_lost_sequences</span> <span class="o">=</span> <span class="n">confdict</span><span class="p">[</span><span class="s2">&quot;scheduling&quot;</span><span class="p">][</span><span class="s2">&quot;restart_lost_sequences&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">restart_complete_sequences</span> <span class="o">=</span> <span class="n">confdict</span><span class="p">[</span><span class="s2">&quot;scheduling&quot;</span><span class="p">][</span><span class="s2">&quot;restart_complete_sequences&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_visits_goal</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">confdict</span><span class="p">[</span><span class="s2">&quot;scheduling&quot;</span><span class="p">][</span><span class="s2">&quot;max_visits_goal&quot;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">airmass_bonus</span> <span class="o">=</span> <span class="n">confdict</span><span class="p">[</span><span class="s2">&quot;scheduling&quot;</span><span class="p">][</span><span class="s2">&quot;airmass_bonus&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hour_angle_bonus</span> <span class="o">=</span> <span class="n">confdict</span><span class="p">[</span><span class="s2">&quot;scheduling&quot;</span><span class="p">][</span><span class="s2">&quot;hour_angle_bonus&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hour_angle_max_rad</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">confdict</span><span class="p">[</span><span class="s2">&quot;scheduling&quot;</span><span class="p">][</span><span class="s2">&quot;hour_angle_max&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="mf">15.0</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">filter_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filter_min_brig_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filter_max_brig_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filter_max_seeing_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filter_num_exp_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filter_exp_times_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filters</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;u&quot;</span><span class="p">,</span> <span class="s2">&quot;g&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="s2">&quot;i&quot;</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">]</span>
+        <span class="k">for</span> <span class="nb">filter</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="p">:</span>
+            <span class="n">filter_section</span> <span class="o">=</span> <span class="s2">&quot;filter_</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">filter</span>
+            <span class="k">if</span> <span class="n">filter_section</span> <span class="ow">in</span> <span class="n">confdict</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">filter_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">filter</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">filter_min_brig_dict</span><span class="p">[</span><span class="nb">filter</span><span class="p">]</span> <span class="o">=</span> <span class="n">confdict</span><span class="p">[</span><span class="n">filter_section</span><span class="p">][</span><span class="s2">&quot;min_brig&quot;</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">filter_max_brig_dict</span><span class="p">[</span><span class="nb">filter</span><span class="p">]</span> <span class="o">=</span> <span class="n">confdict</span><span class="p">[</span><span class="n">filter_section</span><span class="p">][</span><span class="s2">&quot;max_brig&quot;</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">filter_max_seeing_dict</span><span class="p">[</span><span class="nb">filter</span><span class="p">]</span> <span class="o">=</span> <span class="n">confdict</span><span class="p">[</span><span class="n">filter_section</span><span class="p">][</span><span class="s2">&quot;max_seeing&quot;</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">filter_exp_times_dict</span><span class="p">[</span><span class="nb">filter</span><span class="p">]</span> <span class="o">=</span> <span class="n">confdict</span><span class="p">[</span><span class="n">filter_section</span><span class="p">][</span><span class="s2">&quot;exp_times&quot;</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">filter_num_exp_dict</span><span class="p">[</span><span class="nb">filter</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filter_exp_times_dict</span><span class="p">[</span><span class="nb">filter</span><span class="p">])</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">subsequence_filter_list</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">subsequence_visits_list</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">subsequence_num_events</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">subsequence_num_max_missed</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">subsequence_time_interval</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">subsequence_time_window_start</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">subsequence_time_window_max</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">subsequence_time_window_end</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">subsequence_name_list</span> <span class="o">=</span> <span class="n">confdict</span><span class="p">[</span><span class="s2">&quot;subsequences&quot;</span><span class="p">][</span><span class="s2">&quot;names&quot;</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">subsequence_name_list</span><span class="p">:</span>
+            <span class="n">sname</span> <span class="o">=</span> <span class="s2">&quot;subseq_&quot;</span> <span class="o">+</span> <span class="n">name</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">subsequence_num_events</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">confdict</span><span class="p">[</span><span class="n">sname</span><span class="p">][</span><span class="s2">&quot;num_events&quot;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">subsequence_num_max_missed</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">confdict</span><span class="p">[</span><span class="n">sname</span><span class="p">][</span><span class="s2">&quot;num_max_missed&quot;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">subsequence_time_interval</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">confdict</span><span class="p">[</span><span class="n">sname</span><span class="p">][</span><span class="s2">&quot;time_interval&quot;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">subsequence_time_window_start</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">confdict</span><span class="p">[</span><span class="n">sname</span><span class="p">][</span><span class="s2">&quot;time_window_start&quot;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">subsequence_time_window_max</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">confdict</span><span class="p">[</span><span class="n">sname</span><span class="p">][</span><span class="s2">&quot;time_window_max&quot;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">subsequence_time_window_end</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">confdict</span><span class="p">[</span><span class="n">sname</span><span class="p">][</span><span class="s2">&quot;time_window_end&quot;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">subsequence_filter_list</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">confdict</span><span class="p">[</span><span class="n">sname</span><span class="p">][</span><span class="s2">&quot;filters&quot;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">subsequence_visits_list</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">confdict</span><span class="p">[</span><span class="n">sname</span><span class="p">][</span><span class="s2">&quot;visits_per_filter&quot;</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">min_alt</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">min_alt_rad</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TimeDistributionProposal"><a class="viewcode-back" href="../../../../../api/lsst.ts.scheduler.proposals.html#lsst.ts.scheduler.proposals.time_distribution.TimeDistributionProposal">[docs]</a><span class="k">class</span> <span class="nc">TimeDistributionProposal</span><span class="p">(</span><span class="n">Proposal</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">propid</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">confdict</span><span class="p">,</span> <span class="n">skymodel</span><span class="p">):</span>
+
+        <span class="n">Proposal</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">propid</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">confdict</span><span class="p">,</span> <span class="n">skymodel</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="n">TimeDistributionProposalParameters</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proposal_confdict</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sky</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">exclude_planets</span><span class="p">)</span>
+
+        <span class="c1"># cummulative data for the survey</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">survey_fields</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">survey_fields_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">survey_sequences</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">survey_sequences_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">survey_targets_goal</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">survey_targets_visits</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">survey_filters_goal_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">survey_filters_visits_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">survey_filters_progress_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="nb">filter</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">filter_list</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">survey_filters_goal_dict</span><span class="p">[</span><span class="nb">filter</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">survey_filters_visits_dict</span><span class="p">[</span><span class="nb">filter</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">survey_filters_progress_dict</span><span class="p">[</span><span class="nb">filter</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+        <span class="c1"># cummulative data for one night</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tonight_filters_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tonight_fields</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tonight_fields_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tonight_fieldid_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tonight_sequences</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tonight_sequences_dict</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="c1"># data for one visit</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">valued_targets_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_observation</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_observation_was_for_this_proposal</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">in_deep_drilling</span> <span class="o">=</span> <span class="kc">False</span>
+
+<div class="viewcode-block" id="TimeDistributionProposal.start_survey"><a class="viewcode-back" href="../../../../../api/lsst.ts.scheduler.proposals.html#lsst.ts.scheduler.proposals.time_distribution.TimeDistributionProposal.start_survey">[docs]</a>    <span class="k">def</span> <span class="nf">start_survey</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="n">Proposal</span><span class="o">.</span><span class="n">start_survey</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TimeDistributionProposal.start_night"><a class="viewcode-back" href="../../../../../api/lsst.ts.scheduler.proposals.html#lsst.ts.scheduler.proposals.time_distribution.TimeDistributionProposal.start_night">[docs]</a>    <span class="k">def</span> <span class="nf">start_night</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">,</span> <span class="n">filters_mounted_tonight_list</span><span class="p">,</span> <span class="n">night</span><span class="p">):</span>
+
+        <span class="n">Proposal</span><span class="o">.</span><span class="n">start_night</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">,</span> <span class="n">filters_mounted_tonight_list</span><span class="p">,</span> <span class="n">night</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">tonight_filters_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tonight_targets</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tonight_sequences_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="nb">filter</span> <span class="ow">in</span> <span class="n">filters_mounted_tonight_list</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tonight_filters_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">filter</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">build_tonight_fields_list</span><span class="p">(</span><span class="n">timestamp</span><span class="p">,</span> <span class="n">night</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tonight_fields</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tonight_fields_list</span><span class="p">)</span>
+
+        <span class="c1"># compute at start night</span>
+        <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tonight_fields_list</span><span class="p">:</span>
+            <span class="n">fieldid</span> <span class="o">=</span> <span class="n">field</span><span class="o">.</span><span class="n">fieldid</span>
+
+            <span class="c1"># add new fields to fields dictionary</span>
+            <span class="k">if</span> <span class="n">fieldid</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">survey_fields_dict</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">survey_fields_dict</span><span class="p">[</span><span class="n">fieldid</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="o">.</span><span class="n">get_copy</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">survey_fields</span> <span class="o">+=</span> <span class="mi">1</span>
+
+            <span class="c1"># add new fields to sequences dictionary</span>
+            <span class="k">if</span> <span class="n">fieldid</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">survey_sequences_dict</span><span class="p">:</span>
+                <span class="n">sequence</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_sequence</span><span class="p">(</span><span class="n">field</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">survey_sequences_dict</span><span class="p">[</span><span class="n">fieldid</span><span class="p">]</span> <span class="o">=</span> <span class="n">sequence</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">survey_sequences</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">survey_targets_goal</span> <span class="o">+=</span> <span class="n">sequence</span><span class="o">.</span><span class="n">goal</span>
+                <span class="k">for</span> <span class="nb">filter</span> <span class="ow">in</span> <span class="n">sequence</span><span class="o">.</span><span class="n">filters_goal_dict</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">survey_filters_goal_dict</span><span class="p">[</span><span class="nb">filter</span><span class="p">]</span> <span class="o">+=</span> <span class="n">sequence</span><span class="o">.</span><span class="n">filters_goal_dict</span><span class="p">[</span><span class="nb">filter</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">sequence</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">survey_sequences_dict</span><span class="p">[</span><span class="n">fieldid</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">sequence</span><span class="o">.</span><span class="n">is_idle_or_active</span><span class="p">():</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">tonight_sequences_dict</span><span class="p">[</span><span class="n">fieldid</span><span class="p">]</span> <span class="o">=</span> <span class="n">sequence</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">tonight_sequences</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">for</span> <span class="nb">filter</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">filter_list</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">survey_filters_goal_dict</span><span class="p">[</span><span class="nb">filter</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">survey_filters_progress_dict</span><span class="p">[</span><span class="nb">filter</span><span class="p">]</span> <span class="o">=</span> \
+                    <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">survey_filters_visits_dict</span><span class="p">[</span><span class="nb">filter</span><span class="p">])</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">survey_filters_goal_dict</span><span class="p">[</span><span class="nb">filter</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">survey_filters_progress_dict</span><span class="p">[</span><span class="nb">filter</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;start_night tonight fields=</span><span class="si">%i</span><span class="s2"> sequences=</span><span class="si">%i</span><span class="s2">&quot;</span> <span class="o">%</span>
+                       <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tonight_fields</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tonight_sequences</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_observation</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_observation_was_for_this_proposal</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">in_deep_drilling</span> <span class="o">=</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="TimeDistributionProposal.end_night"><a class="viewcode-back" href="../../../../../api/lsst.ts.scheduler.proposals.html#lsst.ts.scheduler.proposals.time_distribution.TimeDistributionProposal.end_night">[docs]</a>    <span class="k">def</span> <span class="nf">end_night</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">):</span>
+
+        <span class="n">Proposal</span><span class="o">.</span><span class="n">end_night</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_deep_drilling</span><span class="p">:</span>
+            <span class="n">fieldid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_observation</span><span class="o">.</span><span class="n">fieldid</span>
+            <span class="n">sequence</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tonight_sequences_dict</span><span class="p">[</span><span class="n">fieldid</span><span class="p">]</span>
+            <span class="n">ssname</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_observation</span><span class="o">.</span><span class="n">subsequencename</span>
+            <span class="n">sequence</span><span class="o">.</span><span class="n">miss_observation_subsequence</span><span class="p">(</span><span class="n">ssname</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;end_night: miss observation field=</span><span class="si">%i</span><span class="s2">, ssname=</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">fieldid</span><span class="p">,</span> <span class="n">ssname</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">evaluate_sequence_continuation</span><span class="p">(</span><span class="n">fieldid</span><span class="p">,</span> <span class="s2">&quot;end of night&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">in_deep_drilling</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;end_night survey fields=</span><span class="si">%i</span><span class="s2"> sequences=</span><span class="si">%i</span><span class="s2"> goal=</span><span class="si">%i</span><span class="s2"> visits=</span><span class="si">%i</span><span class="s2"> progress=</span><span class="si">%.2f%%</span><span class="s2">&quot;</span> <span class="o">%</span>
+                      <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">survey_fields</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">survey_sequences</span><span class="p">,</span>
+                       <span class="bp">self</span><span class="o">.</span><span class="n">survey_targets_goal</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">survey_targets_visits</span><span class="p">,</span>
+                       <span class="mi">100</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_progress</span><span class="p">()))</span></div>
+
+<div class="viewcode-block" id="TimeDistributionProposal.build_tonight_fields_list"><a class="viewcode-back" href="../../../../../api/lsst.ts.scheduler.proposals.html#lsst.ts.scheduler.proposals.time_distribution.TimeDistributionProposal.build_tonight_fields_list">[docs]</a>    <span class="k">def</span> <span class="nf">build_tonight_fields_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">,</span> <span class="n">night</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">tonight_fields_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tonight_fieldid_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">sql</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">select_fields</span><span class="p">(</span><span class="n">timestamp</span><span class="p">,</span> <span class="n">night</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">sky_region</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">sky_exclusions</span><span class="p">,</span>
+                                 <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">sky_nightly_bounds</span><span class="p">)</span>
+
+        <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">res</span><span class="p">:</span>
+            <span class="n">field</span> <span class="o">=</span> <span class="n">Field</span><span class="o">.</span><span class="n">from_db_row</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tonight_fields_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">field</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tonight_fieldid_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">field</span><span class="o">.</span><span class="n">fieldid</span><span class="p">)</span>
+
+        <span class="k">return</span></div>
+
+<div class="viewcode-block" id="TimeDistributionProposal.get_progress"><a class="viewcode-back" href="../../../../../api/lsst.ts.scheduler.proposals.html#lsst.ts.scheduler.proposals.time_distribution.TimeDistributionProposal.get_progress">[docs]</a>    <span class="k">def</span> <span class="nf">get_progress</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">restart_lost_sequences</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">restart_complete_sequences</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">max_visits_goal</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">survey_targets_progress</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">survey_targets_visits</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">max_visits_goal</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">survey_targets_progress</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">survey_targets_goal</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">survey_targets_progress</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">survey_targets_visits</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">survey_targets_goal</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">survey_targets_progress</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+        <span class="k">return</span> <span class="n">survey_targets_progress</span></div>
+
+<div class="viewcode-block" id="TimeDistributionProposal.get_filter_visits"><a class="viewcode-back" href="../../../../../api/lsst.ts.scheduler.proposals.html#lsst.ts.scheduler.proposals.time_distribution.TimeDistributionProposal.get_filter_visits">[docs]</a>    <span class="k">def</span> <span class="nf">get_filter_visits</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">filter</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="nb">filter</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">survey_filters_visits_dict</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">survey_filters_visits_dict</span><span class="p">[</span><span class="nb">filter</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span></div>
+
+<div class="viewcode-block" id="TimeDistributionProposal.get_filter_goal"><a class="viewcode-back" href="../../../../../api/lsst.ts.scheduler.proposals.html#lsst.ts.scheduler.proposals.time_distribution.TimeDistributionProposal.get_filter_goal">[docs]</a>    <span class="k">def</span> <span class="nf">get_filter_goal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">filter</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="nb">filter</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">survey_filters_goal_dict</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">survey_filters_goal_dict</span><span class="p">[</span><span class="nb">filter</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span></div>
+
+<div class="viewcode-block" id="TimeDistributionProposal.get_filter_progress"><a class="viewcode-back" href="../../../../../api/lsst.ts.scheduler.proposals.html#lsst.ts.scheduler.proposals.time_distribution.TimeDistributionProposal.get_filter_progress">[docs]</a>    <span class="k">def</span> <span class="nf">get_filter_progress</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">filter</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="nb">filter</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">survey_filters_progress_dict</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">survey_filters_progress_dict</span><span class="p">[</span><span class="nb">filter</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mf">0.0</span></div>
+
+<div class="viewcode-block" id="TimeDistributionProposal.suggest_targets"><a class="viewcode-back" href="../../../../../api/lsst.ts.scheduler.proposals.html#lsst.ts.scheduler.proposals.time_distribution.TimeDistributionProposal.suggest_targets">[docs]</a>    <span class="k">def</span> <span class="nf">suggest_targets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">,</span> <span class="n">deepdrilling_target</span><span class="p">,</span> <span class="n">constrained_filter</span><span class="p">,</span> <span class="n">cloud</span><span class="p">,</span> <span class="n">seeing</span><span class="p">):</span>
+
+        <span class="n">Proposal</span><span class="o">.</span><span class="n">suggest_targets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignore_clouds</span><span class="p">:</span>
+            <span class="n">cloud</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignore_seeing</span><span class="p">:</span>
+            <span class="n">seeing</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+        <span class="k">if</span> <span class="n">cloud</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">max_cloud</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;suggest_targets: cloud=</span><span class="si">%.2f</span><span class="s2"> &gt; max_cloud=</span><span class="si">%.2f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">cloud</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">max_cloud</span><span class="p">))</span>
+            <span class="k">return</span> <span class="p">[]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">clear_evaluated_target_list</span><span class="p">()</span>
+
+        <span class="c1"># evaluates previous deep drilling state with new target</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_deep_drilling</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">deepdrilling_target</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="c1"># deep drilling event interrupted</span>
+                <span class="n">fieldid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_observation</span><span class="o">.</span><span class="n">fieldid</span>
+                <span class="n">sequence</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tonight_sequences_dict</span><span class="p">[</span><span class="n">fieldid</span><span class="p">]</span>
+                <span class="n">ssname</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_observation</span><span class="o">.</span><span class="n">subsequencename</span>
+                <span class="n">sequence</span><span class="o">.</span><span class="n">miss_observation_subsequence</span><span class="p">(</span><span class="n">ssname</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;suggest_observation: miss observation field=</span><span class="si">%i</span><span class="s2">, ssname=</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span>
+                               <span class="p">(</span><span class="n">fieldid</span><span class="p">,</span> <span class="n">ssname</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">evaluate_sequence_continuation</span><span class="p">(</span><span class="n">fieldid</span><span class="p">,</span> <span class="s2">&quot;interrupted&quot;</span><span class="p">)</span>
+                <span class="n">fields_evaluation_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tonight_fields_list</span>
+                <span class="n">num_targets_to_propose</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">max_num_targets</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">in_deep_drilling</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">observation_fulfills_target</span><span class="p">(</span><span class="n">deepdrilling_target</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_observation</span><span class="p">):</span>
+                    <span class="c1"># deep drilling event continues</span>
+                    <span class="n">fields_evaluation_list</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">survey_fields_dict</span><span class="p">[</span><span class="n">deepdrilling_target</span><span class="o">.</span><span class="n">fieldid</span><span class="p">]]</span>
+                    <span class="n">num_targets_to_propose</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># deep drilling event is not for this proposal</span>
+                    <span class="c1"># deep drilling event interrupted</span>
+                    <span class="n">fieldid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_observation</span><span class="o">.</span><span class="n">fieldid</span>
+                    <span class="n">sequence</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tonight_sequences_dict</span><span class="p">[</span><span class="n">fieldid</span><span class="p">]</span>
+                    <span class="n">ssname</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_observation</span><span class="o">.</span><span class="n">subsequencename</span>
+                    <span class="n">sequence</span><span class="o">.</span><span class="n">miss_observation_subsequence</span><span class="p">(</span><span class="n">ssname</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;suggest_observation: miss observation field=</span><span class="si">%i</span><span class="s2">, ssname=</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span>
+                                   <span class="p">(</span><span class="n">fieldid</span><span class="p">,</span> <span class="n">ssname</span><span class="p">))</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">evaluate_sequence_continuation</span><span class="p">(</span><span class="n">fieldid</span><span class="p">,</span> <span class="s2">&quot;interrupted&quot;</span><span class="p">)</span>
+                    <span class="n">fields_evaluation_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tonight_fields_list</span>
+                    <span class="n">num_targets_to_propose</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">max_num_targets</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">in_deep_drilling</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">deepdrilling_target</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">fields_evaluation_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tonight_fields_list</span>
+                <span class="n">num_targets_to_propose</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">max_num_targets</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">deepdrilling_target</span><span class="o">.</span><span class="n">fieldid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tonight_fieldid_list</span><span class="p">:</span>
+                    <span class="n">fields_evaluation_list</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">survey_fields_dict</span><span class="p">[</span><span class="n">deepdrilling_target</span><span class="o">.</span><span class="n">fieldid</span><span class="p">]]</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">propid</span> <span class="ow">in</span> <span class="n">deepdrilling_target</span><span class="o">.</span><span class="n">propid_list</span><span class="p">:</span>
+                        <span class="c1"># deep drilling event starts</span>
+                        <span class="n">num_targets_to_propose</span> <span class="o">=</span> <span class="mi">1</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">in_deep_drilling</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="c1">#  deep drilling event is not for this proposal</span>
+                        <span class="n">num_targets_to_propose</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">fields_evaluation_list</span> <span class="o">=</span> <span class="p">[]</span>
+                    <span class="n">num_targets_to_propose</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">if</span> <span class="n">constrained_filter</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">filters_evaluation_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tonight_filters_list</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">filters_evaluation_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">constrained_filter</span><span class="p">]</span>
+
+        <span class="c1"># compute sky brightness for all targets</span>
+        <span class="n">id_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">ra_rad_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">dec_rad_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">mags_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">airmass_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">hour_angle_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">moon_distance_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">fields_evaluation_list</span><span class="p">:</span>
+            <span class="c1"># create coordinates arrays</span>
+            <span class="n">id_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">field</span><span class="o">.</span><span class="n">fieldid</span><span class="p">)</span>
+            <span class="n">ra_rad_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">field</span><span class="o">.</span><span class="n">ra_rad</span><span class="p">)</span>
+            <span class="n">dec_rad_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">field</span><span class="o">.</span><span class="n">dec_rad</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">id_list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignore_sky_brightness</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignore_airmass</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sky</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">timestamp</span><span class="p">)</span>
+            <span class="n">sky_mags</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sky</span><span class="o">.</span><span class="n">get_sky_brightness</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">id_list</span><span class="p">))</span>
+            <span class="n">airmass</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sky</span><span class="o">.</span><span class="n">get_airmass</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">id_list</span><span class="p">))</span>
+            <span class="n">nra</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ra_rad_list</span><span class="p">)</span>
+            <span class="n">moon_distance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sky</span><span class="o">.</span><span class="n">get_separation</span><span class="p">(</span><span class="s2">&quot;moon&quot;</span><span class="p">,</span> <span class="n">nra</span><span class="p">,</span>
+                                                    <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dec_rad_list</span><span class="p">))</span>
+            <span class="n">hour_angle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sky</span><span class="o">.</span><span class="n">get_hour_angle</span><span class="p">(</span><span class="n">nra</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">ix</span><span class="p">,</span> <span class="n">fieldid</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">id_list</span><span class="p">):</span>
+                <span class="n">mags_dict</span><span class="p">[</span><span class="n">fieldid</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span><span class="p">[</span><span class="n">ix</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">sky_mags</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+                <span class="n">airmass_dict</span><span class="p">[</span><span class="n">fieldid</span><span class="p">]</span> <span class="o">=</span> <span class="n">airmass</span><span class="p">[</span><span class="n">ix</span><span class="p">]</span>
+                <span class="n">moon_distance_dict</span><span class="p">[</span><span class="n">fieldid</span><span class="p">]</span> <span class="o">=</span> <span class="n">moon_distance</span><span class="p">[</span><span class="n">ix</span><span class="p">]</span>
+                <span class="n">hour_angle_dict</span><span class="p">[</span><span class="n">fieldid</span><span class="p">]</span> <span class="o">=</span> <span class="n">hour_angle</span><span class="p">[</span><span class="n">ix</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_deep_drilling</span><span class="p">:</span>
+            <span class="n">fieldid</span> <span class="o">=</span> <span class="n">deepdrilling_target</span><span class="o">.</span><span class="n">fieldid</span>
+            <span class="n">sequence</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tonight_sequences_dict</span><span class="p">[</span><span class="n">fieldid</span><span class="p">]</span>
+            <span class="n">target</span> <span class="o">=</span> <span class="n">sequence</span><span class="o">.</span><span class="n">get_next_target_subsequence</span><span class="p">(</span><span class="n">deepdrilling_target</span><span class="o">.</span><span class="n">subsequencename</span><span class="p">)</span>
+            <span class="nb">filter</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">filter</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignore_airmass</span><span class="p">:</span>
+                <span class="n">airmass</span> <span class="o">=</span> <span class="mf">1.0</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">airmass</span> <span class="o">=</span> <span class="n">airmass_dict</span><span class="p">[</span><span class="n">fieldid</span><span class="p">]</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignore_sky_brightness</span><span class="p">:</span>
+                <span class="n">sky_brightness</span> <span class="o">=</span> <span class="mf">0.0</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">sky_brightness</span> <span class="o">=</span> <span class="n">mags_dict</span><span class="p">[</span><span class="n">fieldid</span><span class="p">][</span><span class="nb">filter</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">math</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">sky_brightness</span><span class="p">):</span>
+                    <span class="n">sky_brightness</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+            <span class="n">target</span><span class="o">.</span><span class="n">time</span> <span class="o">=</span> <span class="n">timestamp</span>
+            <span class="n">target</span><span class="o">.</span><span class="n">airmass</span> <span class="o">=</span> <span class="n">airmass</span>
+            <span class="n">target</span><span class="o">.</span><span class="n">sky_brightness</span> <span class="o">=</span> <span class="n">sky_brightness</span>
+            <span class="n">target</span><span class="o">.</span><span class="n">cloud</span> <span class="o">=</span> <span class="n">cloud</span>
+            <span class="n">target</span><span class="o">.</span><span class="n">seeing</span> <span class="o">=</span> <span class="n">seeing</span>
+
+            <span class="n">target</span><span class="o">.</span><span class="n">need</span> <span class="o">=</span> <span class="mf">1.0</span>
+            <span class="n">target</span><span class="o">.</span><span class="n">bonus</span> <span class="o">=</span> <span class="mf">0.0</span>
+            <span class="n">target</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">need</span> <span class="o">+</span> <span class="n">target</span><span class="o">.</span><span class="n">bonus</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_evaluated_target</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">EXTENSIVE</span><span class="p">,</span> <span class="s2">&quot;suggest_targets: in deep drilling&quot;</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_evaluated_target_list</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># not in deep drilling (yet)</span>
+        <span class="n">evaluated_fields</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">discarded_fields_airmass</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">discarded_fields_notargets</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">discarded_targets_notallfilters</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">discarded_targets_consecutive</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">discarded_targets_nanbrightness</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">discarded_targets_lowbrightness</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">discarded_targets_highbrightness</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">discarded_targets_seeing</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">discarded_moon_distance</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">evaluated_targets</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">missed_subsequences_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># compute target value</span>
+        <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">fields_evaluation_list</span><span class="p">:</span>
+            <span class="n">fieldid</span> <span class="o">=</span> <span class="n">field</span><span class="o">.</span><span class="n">fieldid</span>
+
+            <span class="c1"># discard fields with no more targets tonight</span>
+            <span class="k">if</span> <span class="n">fieldid</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tonight_sequences_dict</span><span class="p">:</span>
+                <span class="n">discarded_fields_notargets</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">continue</span>
+
+            <span class="n">sequence</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tonight_sequences_dict</span><span class="p">[</span><span class="n">fieldid</span><span class="p">]</span>
+
+            <span class="c1"># discard fields beyond airmass limit</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignore_airmass</span><span class="p">:</span>
+                <span class="n">airmass</span> <span class="o">=</span> <span class="mf">1.0</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">airmass</span> <span class="o">=</span> <span class="n">airmass_dict</span><span class="p">[</span><span class="n">fieldid</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">airmass</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">max_airmass</span><span class="p">:</span>
+                    <span class="n">discarded_fields_airmass</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="k">continue</span>
+
+            <span class="n">moon_distance</span> <span class="o">=</span> <span class="n">moon_distance_dict</span><span class="p">[</span><span class="n">fieldid</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">moon_distance</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">min_distance_moon_rad</span><span class="p">:</span>
+                <span class="n">discarded_moon_distance</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">continue</span>
+
+            <span class="n">airmass_rank</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">airmass_bonus</span> <span class="o">*</span> \
+                <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">max_airmass</span> <span class="o">-</span> <span class="n">airmass</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">max_airmass</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">)</span>
+
+            <span class="n">hour_angle_rank</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">hour_angle_bonus</span> <span class="o">*</span> \
+                <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">numpy</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">hour_angle_dict</span><span class="p">[</span><span class="n">fieldid</span><span class="p">])</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">hour_angle_max_rad</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">sequence</span><span class="o">.</span><span class="n">enabled_subsequences_list</span><span class="p">:</span>
+                <span class="n">target</span> <span class="o">=</span> <span class="n">sequence</span><span class="o">.</span><span class="n">get_next_target_subsequence</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+                <span class="nb">filter</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">filter</span>
+                <span class="n">filter_list</span> <span class="o">=</span> <span class="n">sequence</span><span class="o">.</span><span class="n">get_next_filter_list_subsequence</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+
+                <span class="c1"># discard target with unavailable filters</span>
+                <span class="n">any_filter_unavailable</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">filter_list</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">f</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">filters_evaluation_list</span><span class="p">:</span>
+                        <span class="n">any_filter_unavailable</span> <span class="o">=</span> <span class="kc">True</span>
+                        <span class="k">break</span>
+                <span class="k">if</span> <span class="n">any_filter_unavailable</span><span class="p">:</span>
+                    <span class="n">discarded_targets_notallfilters</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="k">continue</span>
+
+                <span class="c1"># discard target beyond seeing limit</span>
+                <span class="n">any_filter_bad_seeing</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">filter_list</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">seeing</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">filter_max_seeing_dict</span><span class="p">[</span><span class="n">f</span><span class="p">]:</span>
+                        <span class="n">any_filter_bad_seeing</span> <span class="o">=</span> <span class="kc">True</span>
+                        <span class="k">break</span>
+                <span class="k">if</span> <span class="n">any_filter_bad_seeing</span><span class="p">:</span>
+                    <span class="n">discarded_targets_seeing</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="k">continue</span>
+
+                <span class="n">target</span><span class="o">.</span><span class="n">time</span> <span class="o">=</span> <span class="n">timestamp</span>
+                <span class="n">target</span><span class="o">.</span><span class="n">airmass</span> <span class="o">=</span> <span class="n">airmass</span>
+                <span class="c1"># discard target if consecutive</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_observation_was_for_this_proposal</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">observation_fulfills_target</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">last_observation</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span> <span class="ow">and</span>
+                            <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">accept_consecutive_visits</span><span class="p">):</span>
+                        <span class="n">discarded_targets_consecutive</span> <span class="o">+=</span> <span class="mi">1</span>
+                        <span class="k">continue</span>
+
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignore_sky_brightness</span><span class="p">:</span>
+                    <span class="n">sky_brightness</span> <span class="o">=</span> <span class="mf">0.0</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># discard target beyond sky brightness limits</span>
+                    <span class="n">any_filter_bad_brightness</span> <span class="o">=</span> <span class="kc">False</span>
+                    <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">filter_list</span><span class="p">:</span>
+                        <span class="n">sky_brightness</span> <span class="o">=</span> <span class="n">mags_dict</span><span class="p">[</span><span class="n">fieldid</span><span class="p">][</span><span class="n">f</span><span class="p">]</span>
+                        <span class="k">if</span> <span class="n">math</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">sky_brightness</span><span class="p">):</span>
+                            <span class="n">any_filter_bad_brightness</span> <span class="o">=</span> <span class="kc">True</span>
+                            <span class="n">discarded_targets_nanbrightness</span> <span class="o">+=</span> <span class="mi">1</span>
+                            <span class="k">break</span>
+                        <span class="k">if</span> <span class="n">sky_brightness</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">filter_min_brig_dict</span><span class="p">[</span><span class="n">f</span><span class="p">]:</span>
+                            <span class="n">any_filter_bad_brightness</span> <span class="o">=</span> <span class="kc">True</span>
+                            <span class="n">discarded_targets_lowbrightness</span> <span class="o">+=</span> <span class="mi">1</span>
+                            <span class="k">break</span>
+                        <span class="k">if</span> <span class="n">sky_brightness</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">filter_max_brig_dict</span><span class="p">[</span><span class="n">f</span><span class="p">]:</span>
+                            <span class="n">any_filter_bad_brightness</span> <span class="o">=</span> <span class="kc">True</span>
+                            <span class="n">discarded_targets_highbrightness</span> <span class="o">+=</span> <span class="mi">1</span>
+                            <span class="k">break</span>
+                    <span class="k">if</span> <span class="n">any_filter_bad_brightness</span><span class="p">:</span>
+                        <span class="k">continue</span>
+
+                <span class="c1"># target is accepted</span>
+                <span class="c1"># compute value for available targets</span>
+                <span class="n">target</span><span class="o">.</span><span class="n">sky_brightness</span> <span class="o">=</span> <span class="n">sky_brightness</span>
+                <span class="n">target</span><span class="o">.</span><span class="n">cloud</span> <span class="o">=</span> <span class="n">cloud</span>
+                <span class="n">target</span><span class="o">.</span><span class="n">seeing</span> <span class="o">=</span> <span class="n">seeing</span>
+
+                <span class="n">time_rank</span> <span class="o">=</span> <span class="n">sequence</span><span class="o">.</span><span class="n">time_window_subsequence</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">)</span>
+                <span class="n">need_ratio</span> <span class="o">=</span> <span class="n">time_rank</span>
+
+                <span class="k">if</span> <span class="n">need_ratio</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
+                    <span class="c1"># target is needed</span>
+                    <span class="n">target</span><span class="o">.</span><span class="n">need</span> <span class="o">=</span> <span class="n">need_ratio</span>
+                    <span class="n">target</span><span class="o">.</span><span class="n">bonus</span> <span class="o">=</span> <span class="n">airmass_rank</span> <span class="o">+</span> <span class="n">hour_angle_rank</span>
+                    <span class="n">target</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">need</span> <span class="o">+</span> <span class="n">target</span><span class="o">.</span><span class="n">bonus</span>
+
+                    <span class="bp">self</span><span class="o">.</span><span class="n">add_evaluated_target</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">need_ratio</span> <span class="o">&lt;</span> <span class="mf">0.0</span><span class="p">:</span>
+                    <span class="c1"># subsequence event missed</span>
+                    <span class="n">missed_subsequences_list</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">fieldid</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span>
+
+                <span class="n">evaluated_targets</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">evaluated_fields</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="n">fieldid</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="ow">in</span> <span class="n">missed_subsequences_list</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">survey_sequences_dict</span><span class="p">[</span><span class="n">fieldid</span><span class="p">]</span><span class="o">.</span><span class="n">miss_observation_subsequence</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;suggest_targets: miss observation field=</span><span class="si">%i</span><span class="s2">, ssname=</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">fieldid</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">evaluate_sequence_continuation</span><span class="p">(</span><span class="n">fieldid</span><span class="p">,</span> <span class="s2">&quot;missed observation&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">EXTENSIVE</span><span class="p">,</span> <span class="s2">&quot;suggest_targets: fields=</span><span class="si">%i</span><span class="s2">, evaluated=</span><span class="si">%i</span><span class="s2">, &quot;</span>
+                     <span class="s2">&quot;discarded airmass=</span><span class="si">%i</span><span class="s2"> notargets=</span><span class="si">%i</span><span class="s2">&quot;</span> <span class="o">%</span>
+                     <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">id_list</span><span class="p">),</span> <span class="n">evaluated_fields</span><span class="p">,</span>
+                      <span class="n">discarded_fields_airmass</span><span class="p">,</span> <span class="n">discarded_fields_notargets</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">EXTENSIVE</span><span class="p">,</span> <span class="s2">&quot;suggest_targets: evaluated targets=</span><span class="si">%i</span><span class="s2">, discarded consecutive=</span><span class="si">%i</span><span class="s2"> &quot;</span>
+                     <span class="s2">&quot;notallfilters=</span><span class="si">%i</span><span class="s2"> seeing=</span><span class="si">%i</span><span class="s2"> &quot;</span>
+                     <span class="s2">&quot;lowbright=</span><span class="si">%i</span><span class="s2"> highbright=</span><span class="si">%i</span><span class="s2"> nanbright=</span><span class="si">%i</span><span class="s2"> moondistance=</span><span class="si">%i</span><span class="s2">&quot;</span> <span class="o">%</span>
+                     <span class="p">(</span><span class="n">evaluated_targets</span><span class="p">,</span> <span class="n">discarded_targets_consecutive</span><span class="p">,</span>
+                      <span class="n">discarded_targets_notallfilters</span><span class="p">,</span>
+                      <span class="n">discarded_targets_seeing</span><span class="p">,</span>
+                      <span class="n">discarded_targets_lowbrightness</span><span class="p">,</span> <span class="n">discarded_targets_highbrightness</span><span class="p">,</span>
+                      <span class="n">discarded_targets_nanbrightness</span><span class="p">,</span> <span class="n">discarded_moon_distance</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_evaluated_target_list</span><span class="p">(</span><span class="n">num_targets_to_propose</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TimeDistributionProposal.clear_evaluated_target_list"><a class="viewcode-back" href="../../../../../api/lsst.ts.scheduler.proposals.html#lsst.ts.scheduler.proposals.time_distribution.TimeDistributionProposal.clear_evaluated_target_list">[docs]</a>    <span class="k">def</span> <span class="nf">clear_evaluated_target_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">valued_targets_list</span> <span class="o">=</span> <span class="p">[]</span></div>
+
+<div class="viewcode-block" id="TimeDistributionProposal.add_evaluated_target"><a class="viewcode-back" href="../../../../../api/lsst.ts.scheduler.proposals.html#lsst.ts.scheduler.proposals.time_distribution.TimeDistributionProposal.add_evaluated_target">[docs]</a>    <span class="k">def</span> <span class="nf">add_evaluated_target</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">valued_targets_list</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="o">-</span><span class="n">target</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">target</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="TimeDistributionProposal.get_evaluated_target_list"><a class="viewcode-back" href="../../../../../api/lsst.ts.scheduler.proposals.html#lsst.ts.scheduler.proposals.time_distribution.TimeDistributionProposal.get_evaluated_target_list">[docs]</a>    <span class="k">def</span> <span class="nf">get_evaluated_target_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_targets_to_propose</span><span class="p">):</span>
+
+        <span class="n">sorted_list</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">valued_targets_list</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">itemgetter</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">winners_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">ix</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sorted_list</span><span class="p">),</span> <span class="n">num_targets_to_propose</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">winners_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sorted_list</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">losers_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">ix</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sorted_list</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">losers_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sorted_list</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">winners_list</span></div>
+
+<div class="viewcode-block" id="TimeDistributionProposal.register_observation"><a class="viewcode-back" href="../../../../../api/lsst.ts.scheduler.proposals.html#lsst.ts.scheduler.proposals.time_distribution.TimeDistributionProposal.register_observation">[docs]</a>    <span class="k">def</span> <span class="nf">register_observation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">observation</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_observation</span> <span class="o">=</span> <span class="n">observation</span><span class="o">.</span><span class="n">get_copy</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_observation_was_for_this_proposal</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">propid</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">observation</span><span class="o">.</span><span class="n">propid_list</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">accept_serendipity</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">fieldid</span> <span class="o">=</span> <span class="n">observation</span><span class="o">.</span><span class="n">fieldid</span>
+        <span class="nb">filter</span> <span class="o">=</span> <span class="n">observation</span><span class="o">.</span><span class="n">filter</span>
+
+        <span class="n">tfound</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">target</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">winners_list</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">observation_fulfills_target</span><span class="p">(</span><span class="n">observation</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
+                <span class="n">tfound</span> <span class="o">=</span> <span class="n">target</span>
+                <span class="k">break</span>
+        <span class="k">if</span> <span class="n">tfound</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">target</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">losers_list</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">observation_fulfills_target</span><span class="p">(</span><span class="n">observation</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
+                    <span class="n">tfound</span> <span class="o">=</span> <span class="n">target</span>
+                    <span class="k">break</span>
+
+        <span class="k">if</span> <span class="n">tfound</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">EXTENSIVE</span><span class="p">,</span> <span class="s2">&quot;register_observation: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">target</span><span class="p">))</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">survey_sequences_dict</span><span class="p">[</span><span class="n">fieldid</span><span class="p">]</span><span class="o">.</span><span class="n">register_observation</span><span class="p">(</span><span class="n">observation</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">evaluate_sequence_continuation</span><span class="p">(</span><span class="n">fieldid</span><span class="p">,</span> <span class="s2">&quot;new observation&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">in_deep_drilling</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">survey_sequences_dict</span><span class="p">[</span><span class="n">fieldid</span><span class="p">]</span><span class="o">.</span><span class="n">is_in_deep_drilling</span><span class="p">()</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">survey_targets_visits</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">survey_filters_visits_dict</span><span class="p">[</span><span class="nb">filter</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">survey_filters_goal_dict</span><span class="p">[</span><span class="nb">filter</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">survey_filters_progress_dict</span><span class="p">[</span><span class="nb">filter</span><span class="p">]</span> <span class="o">=</span> \
+                    <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">survey_filters_visits_dict</span><span class="p">[</span><span class="nb">filter</span><span class="p">])</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">survey_filters_goal_dict</span><span class="p">[</span><span class="nb">filter</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">survey_filters_progress_dict</span><span class="p">[</span><span class="nb">filter</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">last_observation_was_for_this_proposal</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="k">return</span> <span class="n">tfound</span></div>
+
+<div class="viewcode-block" id="TimeDistributionProposal.observation_fulfills_target"><a class="viewcode-back" href="../../../../../api/lsst.ts.scheduler.proposals.html#lsst.ts.scheduler.proposals.time_distribution.TimeDistributionProposal.observation_fulfills_target">[docs]</a>    <span class="k">def</span> <span class="nf">observation_fulfills_target</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">observ</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
+
+        <span class="k">return</span> <span class="p">(</span><span class="n">observ</span><span class="o">.</span><span class="n">fieldid</span> <span class="o">==</span> <span class="n">target</span><span class="o">.</span><span class="n">fieldid</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">observ</span><span class="o">.</span><span class="n">filter</span> <span class="o">==</span> <span class="n">target</span><span class="o">.</span><span class="n">filter</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TimeDistributionProposal.evaluate_sequence_continuation"><a class="viewcode-back" href="../../../../../api/lsst.ts.scheduler.proposals.html#lsst.ts.scheduler.proposals.time_distribution.TimeDistributionProposal.evaluate_sequence_continuation">[docs]</a>    <span class="k">def</span> <span class="nf">evaluate_sequence_continuation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fieldid</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+
+        <span class="n">sequence</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">survey_sequences_dict</span><span class="p">[</span><span class="n">fieldid</span><span class="p">]</span>
+        <span class="n">delta_goal</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">delta_filters_goal_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="nb">filter</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">filter_list</span><span class="p">:</span>
+            <span class="n">delta_filters_goal_dict</span><span class="p">[</span><span class="nb">filter</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">if</span> <span class="n">sequence</span><span class="o">.</span><span class="n">is_lost</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;evaluate_sequence_continuation: sequence LOST field=</span><span class="si">%i</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">fieldid</span><span class="p">,</span> <span class="n">text</span><span class="p">))</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">restart_lost_sequences</span><span class="p">:</span>
+                <span class="n">delta_goal</span> <span class="o">=</span> <span class="n">sequence</span><span class="o">.</span><span class="n">visits</span>
+                <span class="k">for</span> <span class="nb">filter</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">filter_list</span><span class="p">:</span>
+                    <span class="n">delta_filters_goal_dict</span><span class="p">[</span><span class="nb">filter</span><span class="p">]</span> <span class="o">+=</span> <span class="n">sequence</span><span class="o">.</span><span class="n">filters_visits_dict</span><span class="p">[</span><span class="nb">filter</span><span class="p">]</span>
+                <span class="n">sequence</span><span class="o">.</span><span class="n">restart</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;evaluate_sequence_continuation: sequence RESTARTED field=</span><span class="si">%i</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">fieldid</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">remove_sequence</span><span class="p">(</span><span class="n">fieldid</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">sequence</span><span class="o">.</span><span class="n">is_complete</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;evaluate_sequence_continuation: sequence COMPLETE field=</span><span class="si">%i</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">fieldid</span><span class="p">,</span> <span class="n">text</span><span class="p">))</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">restart_complete_sequences</span><span class="p">:</span>
+                <span class="n">delta_goal</span> <span class="o">=</span> <span class="n">sequence</span><span class="o">.</span><span class="n">visits</span>
+                <span class="k">for</span> <span class="nb">filter</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">filter_list</span><span class="p">:</span>
+                    <span class="n">delta_filters_goal_dict</span><span class="p">[</span><span class="nb">filter</span><span class="p">]</span> <span class="o">+=</span> <span class="n">sequence</span><span class="o">.</span><span class="n">filters_visits_dict</span><span class="p">[</span><span class="nb">filter</span><span class="p">]</span>
+                <span class="n">sequence</span><span class="o">.</span><span class="n">restart</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;evaluate_sequence_continuation: sequence RESTARTED field=</span><span class="si">%i</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">fieldid</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">remove_sequence</span><span class="p">(</span><span class="n">fieldid</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">delta_goal</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># sequence was restarted and goal of visits has increased</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">survey_targets_goal</span> <span class="o">+=</span> <span class="n">delta_goal</span>
+            <span class="k">for</span> <span class="nb">filter</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">filter_list</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">survey_filters_goal_dict</span><span class="p">[</span><span class="nb">filter</span><span class="p">]</span> <span class="o">+=</span> <span class="n">delta_filters_goal_dict</span><span class="p">[</span><span class="nb">filter</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;evaluate_sequence_continuation: goal+ </span><span class="si">%i</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">delta_goal</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">delta_filters_goal_dict</span><span class="p">)))</span></div>
+
+<div class="viewcode-block" id="TimeDistributionProposal.remove_sequence"><a class="viewcode-back" href="../../../../../api/lsst.ts.scheduler.proposals.html#lsst.ts.scheduler.proposals.time_distribution.TimeDistributionProposal.remove_sequence">[docs]</a>    <span class="k">def</span> <span class="nf">remove_sequence</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fieldid</span><span class="p">):</span>
+
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">tonight_sequences_dict</span><span class="p">[</span><span class="n">fieldid</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tonight_sequences</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tonight_fields_list</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">field</span><span class="o">.</span><span class="n">fieldid</span> <span class="o">==</span> <span class="n">fieldid</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">tonight_fields_list</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">field</span><span class="p">)</span>
+                <span class="k">break</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tonight_fieldid_list</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">fieldid</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TimeDistributionProposal.create_sequence"><a class="viewcode-back" href="../../../../../api/lsst.ts.scheduler.proposals.html#lsst.ts.scheduler.proposals.time_distribution.TimeDistributionProposal.create_sequence">[docs]</a>    <span class="k">def</span> <span class="nf">create_sequence</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="p">):</span>
+
+        <span class="n">sequence</span> <span class="o">=</span> <span class="n">Sequence</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">propid</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">sequence</span></div></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Francisco Delgado.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'unknown',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

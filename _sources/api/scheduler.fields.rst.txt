@@ -1,0 +1,70 @@
+scheduler\.fields package
+=========================
+
+Submodules
+----------
+
+scheduler\.fields\.create\_fields\_data module
+----------------------------------------------
+
+.. automodule:: scheduler.fields.create_fields_data
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+scheduler\.fields\.create\_fields\_db module
+--------------------------------------------
+
+.. automodule:: scheduler.fields.create_fields_db
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+scheduler\.fields\.create\_fields\_table module
+-----------------------------------------------
+
+.. automodule:: scheduler.fields.create_fields_table
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+scheduler\.fields\.field\_selection module
+------------------------------------------
+
+.. automodule:: scheduler.fields.field_selection
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+scheduler\.fields\.fields\_database module
+------------------------------------------
+
+.. automodule:: scheduler.fields.fields_database
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+scheduler\.fields\.ingest\_fields\_data module
+----------------------------------------------
+
+.. automodule:: scheduler.fields.ingest_fields_data
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+scheduler\.fields\.make\_fields\_database module
+------------------------------------------------
+
+.. automodule:: scheduler.fields.make_fields_database
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: scheduler.fields
+    :members:
+    :undoc-members:
+    :show-inheritance:

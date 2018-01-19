@@ -1,0 +1,62 @@
+lsst\.ts\.scheduler\.proposals package
+======================================
+
+Submodules
+----------
+
+lsst\.ts\.scheduler\.proposals\.area\_distribution module
+---------------------------------------------------------
+
+.. automodule:: lsst.ts.scheduler.proposals.area_distribution
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+lsst\.ts\.scheduler\.proposals\.proposal module
+-----------------------------------------------
+
+.. automodule:: lsst.ts.scheduler.proposals.proposal
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+lsst\.ts\.scheduler\.proposals\.scripted module
+-----------------------------------------------
+
+.. automodule:: lsst.ts.scheduler.proposals.scripted
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+lsst\.ts\.scheduler\.proposals\.sequence module
+-----------------------------------------------
+
+.. automodule:: lsst.ts.scheduler.proposals.sequence
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+lsst\.ts\.scheduler\.proposals\.subsequence module
+--------------------------------------------------
+
+.. automodule:: lsst.ts.scheduler.proposals.subsequence
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+lsst\.ts\.scheduler\.proposals\.time\_distribution module
+---------------------------------------------------------
+
+.. automodule:: lsst.ts.scheduler.proposals.time_distribution
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: lsst.ts.scheduler.proposals
+    :members:
+    :undoc-members:
+    :show-inheritance:

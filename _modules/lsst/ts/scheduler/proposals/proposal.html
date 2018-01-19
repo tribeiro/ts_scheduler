@@ -1,0 +1,369 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>lsst.ts.scheduler.proposals.proposal &mdash; LSST Scheduler unknown documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="LSST Scheduler unknown documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> LSST Scheduler
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                unknown
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../scheduler.html">LSST Scheduler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../driver.html">Driver API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../history.html">History</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../api/lsst.ts.scheduler.html">lsst.ts.scheduler package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../index.html">LSST Scheduler</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>lsst.ts.scheduler.proposals.proposal</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for lsst.ts.scheduler.proposals.proposal</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">object</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">math</span>
+
+<span class="kn">from</span> <span class="nn">lsst.ts.scheduler.fields</span> <span class="k">import</span> <span class="n">FieldsDatabase</span><span class="p">,</span> <span class="n">FieldSelection</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Proposal&quot;</span><span class="p">]</span>
+
+<div class="viewcode-block" id="Proposal"><a class="viewcode-back" href="../../../../../api/lsst.ts.scheduler.proposals.html#lsst.ts.scheduler.proposals.proposal.Proposal">[docs]</a><span class="k">class</span> <span class="nc">Proposal</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">propid</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">confdict</span><span class="p">,</span> <span class="n">skymodel</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">propid</span> <span class="o">=</span> <span class="n">propid</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;scheduler.proposals.</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">proposal_confdict</span> <span class="o">=</span> <span class="n">confdict</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sky</span> <span class="o">=</span> <span class="n">skymodel</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">db</span> <span class="o">=</span> <span class="n">FieldsDatabase</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">field_select</span> <span class="o">=</span> <span class="n">FieldSelection</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">night_boundary</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ignore_sky_brightness</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ignore_airmass</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ignore_clouds</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ignore_seeing</span> <span class="o">=</span> <span class="kc">False</span>
+
+<div class="viewcode-block" id="Proposal.configure_constraints"><a class="viewcode-back" href="../../../../../api/lsst.ts.scheduler.proposals.html#lsst.ts.scheduler.proposals.proposal.Proposal.configure_constraints">[docs]</a>    <span class="k">def</span> <span class="nf">configure_constraints</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">night_boundary</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">night_boundary</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ignore_sky_brightness</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">ignore_sky_brightness</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ignore_airmass</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">ignore_airmass</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ignore_clouds</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">ignore_clouds</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ignore_seeing</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">ignore_seeing</span></div>
+
+<div class="viewcode-block" id="Proposal.start_survey"><a class="viewcode-back" href="../../../../../api/lsst.ts.scheduler.proposals.html#lsst.ts.scheduler.proposals.proposal.Proposal.start_survey">[docs]</a>    <span class="k">def</span> <span class="nf">start_survey</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span></div>
+
+<div class="viewcode-block" id="Proposal.end_survey"><a class="viewcode-back" href="../../../../../api/lsst.ts.scheduler.proposals.html#lsst.ts.scheduler.proposals.proposal.Proposal.end_survey">[docs]</a>    <span class="k">def</span> <span class="nf">end_survey</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span></div>
+
+<div class="viewcode-block" id="Proposal.start_night"><a class="viewcode-back" href="../../../../../api/lsst.ts.scheduler.proposals.html#lsst.ts.scheduler.proposals.proposal.Proposal.start_night">[docs]</a>    <span class="k">def</span> <span class="nf">start_night</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">,</span> <span class="n">filters_mounted_tonight_list</span><span class="p">,</span> <span class="n">night</span><span class="p">):</span>
+        <span class="k">return</span></div>
+
+<div class="viewcode-block" id="Proposal.end_night"><a class="viewcode-back" href="../../../../../api/lsst.ts.scheduler.proposals.html#lsst.ts.scheduler.proposals.proposal.Proposal.end_night">[docs]</a>    <span class="k">def</span> <span class="nf">end_night</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">):</span>
+        <span class="k">return</span></div>
+
+<div class="viewcode-block" id="Proposal.suggest_targets"><a class="viewcode-back" href="../../../../../api/lsst.ts.scheduler.proposals.html#lsst.ts.scheduler.proposals.proposal.Proposal.suggest_targets">[docs]</a>    <span class="k">def</span> <span class="nf">suggest_targets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[]</span></div>
+
+<div class="viewcode-block" id="Proposal.select_fields"><a class="viewcode-back" href="../../../../../api/lsst.ts.scheduler.proposals.html#lsst.ts.scheduler.proposals.proposal.Proposal.select_fields">[docs]</a>    <span class="k">def</span> <span class="nf">select_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">,</span> <span class="n">night</span><span class="p">,</span> <span class="n">sky_region</span><span class="p">,</span> <span class="n">sky_exclusions</span><span class="p">,</span> <span class="n">sky_nightly_bounds</span><span class="p">):</span>
+        <span class="n">query_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">delta_lst</span> <span class="o">=</span> <span class="n">sky_nightly_bounds</span><span class="p">[</span><span class="s2">&quot;delta_lst&quot;</span><span class="p">]</span>
+        <span class="n">dec_window</span> <span class="o">=</span> <span class="n">sky_exclusions</span><span class="p">[</span><span class="s2">&quot;dec_window&quot;</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">sky</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">timestamp</span><span class="p">)</span>
+        <span class="p">(</span><span class="n">sunset_timestamp</span><span class="p">,</span> <span class="n">sunrise_timestamp</span><span class="p">)</span> <span class="o">=</span> \
+            <span class="bp">self</span><span class="o">.</span><span class="n">sky</span><span class="o">.</span><span class="n">get_night_boundaries</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">sky_nightly_bounds</span><span class="p">[</span><span class="s2">&quot;twilight_boundary&quot;</span><span class="p">])</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">sky</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">sunset_timestamp</span><span class="p">)</span>
+        <span class="n">sunset_lst_rad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sky</span><span class="o">.</span><span class="n">date_profile</span><span class="o">.</span><span class="n">lst_rad</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">sky</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">sunrise_timestamp</span><span class="p">)</span>
+        <span class="n">sunrise_lst_rad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sky</span><span class="o">.</span><span class="n">date_profile</span><span class="o">.</span><span class="n">lst_rad</span>
+
+        <span class="c1"># compute RA relative min at sunset twilight</span>
+        <span class="n">min_rel_ra</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">sunset_lst_rad</span><span class="p">)</span> <span class="o">-</span> <span class="n">delta_lst</span>
+
+        <span class="c1"># compute RA relative max at sunrise twilight</span>
+        <span class="n">max_rel_ra</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">sunrise_lst_rad</span><span class="p">)</span> <span class="o">+</span> <span class="n">delta_lst</span>
+
+        <span class="c1"># normalize RA relative limits to the [0; 360] range</span>
+        <span class="n">min_rel_ra</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sky</span><span class="o">.</span><span class="n">sun</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">min_rel_ra</span><span class="p">)</span>
+        <span class="n">max_rel_ra</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sky</span><span class="o">.</span><span class="n">sun</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">max_rel_ra</span><span class="p">)</span>
+
+        <span class="c1"># compute DEC relative min</span>
+        <span class="n">min_rel_dec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sky</span><span class="o">.</span><span class="n">date_profile</span><span class="o">.</span><span class="n">location</span><span class="o">.</span><span class="n">latitude</span> <span class="o">-</span> <span class="n">dec_window</span>
+
+        <span class="c1"># compute DEC relative max</span>
+        <span class="n">max_rel_dec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sky</span><span class="o">.</span><span class="n">date_profile</span><span class="o">.</span><span class="n">location</span><span class="o">.</span><span class="n">latitude</span> <span class="o">+</span> <span class="n">dec_window</span>
+
+        <span class="c1"># Handle delta LST and max reach</span>
+        <span class="n">query_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">field_select</span><span class="o">.</span><span class="n">select_region</span><span class="p">(</span><span class="s2">&quot;RA&quot;</span><span class="p">,</span> <span class="n">min_rel_ra</span><span class="p">,</span> <span class="n">max_rel_ra</span><span class="p">))</span>
+        <span class="n">query_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">field_select</span><span class="o">.</span><span class="n">select_region</span><span class="p">(</span><span class="s2">&quot;Dec&quot;</span><span class="p">,</span> <span class="n">min_rel_dec</span><span class="p">,</span> <span class="n">max_rel_dec</span><span class="p">))</span>
+
+        <span class="n">combine_list</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;and&quot;</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="s2">&quot;user_regions&quot;</span> <span class="ow">in</span> <span class="n">sky_region</span><span class="p">:</span>
+            <span class="c1"># Handle user regions as a list of field ids</span>
+            <span class="n">query_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">field_select</span><span class="o">.</span><span class="n">user_regions</span><span class="p">(</span><span class="n">sky_region</span><span class="p">[</span><span class="s2">&quot;user_regions&quot;</span><span class="p">]))</span>
+            <span class="n">combine_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;and&quot;</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Handle any time dependent cuts</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">time_ranges</span> <span class="o">=</span> <span class="n">sky_region</span><span class="p">[</span><span class="s2">&quot;time_ranges&quot;</span><span class="p">]</span>
+                <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">time_range</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">time_ranges</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">night</span> <span class="o">&gt;=</span> <span class="n">time_range</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">and</span> <span class="n">night</span> <span class="o">&lt;=</span> <span class="n">time_range</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+                        <span class="n">index</span> <span class="o">=</span> <span class="n">i</span>
+                        <span class="k">break</span>
+                <span class="c1"># Mappings are float arrays when read from file</span>
+                <span class="n">mapping</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">sky_region</span><span class="p">[</span><span class="s2">&quot;selection_mappings&quot;</span><span class="p">][</span><span class="n">index</span><span class="p">]]</span>
+                <span class="n">region_cuts</span> <span class="o">=</span> <span class="n">sky_region</span><span class="p">[</span><span class="s2">&quot;cuts&quot;</span><span class="p">][</span><span class="n">mapping</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="n">mapping</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="n">region_cuts</span> <span class="o">=</span> <span class="n">sky_region</span><span class="p">[</span><span class="s2">&quot;cuts&quot;</span><span class="p">]</span>
+
+            <span class="c1"># Handle the sky region selections</span>
+            <span class="k">for</span> <span class="n">cut</span> <span class="ow">in</span> <span class="n">region_cuts</span><span class="p">:</span>
+                <span class="n">cut_type</span> <span class="o">=</span> <span class="n">cut</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">cut_type</span> <span class="o">!=</span> <span class="s2">&quot;GP&quot;</span><span class="p">:</span>
+                    <span class="n">query_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">field_select</span><span class="o">.</span><span class="n">select_region</span><span class="p">(</span><span class="n">cut_type</span><span class="p">,</span> <span class="n">cut</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">cut</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">query_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">field_select</span><span class="o">.</span><span class="n">galactic_region</span><span class="p">(</span><span class="n">cut</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">cut</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">cut</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span>
+                                                                        <span class="n">exclusion</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+
+            <span class="n">current_num_queries</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">query_list</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">current_num_queries</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">combine_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;and&quot;</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">combine_list</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">sky_region</span><span class="p">[</span><span class="s2">&quot;combiners&quot;</span><span class="p">])</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">pass</span>
+
+            <span class="c1"># Handle the sky exclusion selections</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">cut</span> <span class="ow">in</span> <span class="n">sky_exclusions</span><span class="p">[</span><span class="s2">&quot;cuts&quot;</span><span class="p">]:</span>
+                    <span class="n">cut_type</span> <span class="o">=</span> <span class="n">cut</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="n">cut_type</span> <span class="o">==</span> <span class="s2">&quot;GP&quot;</span><span class="p">:</span>
+                        <span class="n">query_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">field_select</span><span class="o">.</span><span class="n">galactic_region</span><span class="p">(</span><span class="n">cut</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">cut</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">cut</span><span class="p">[</span><span class="mi">3</span><span class="p">]))</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Do not know how to handle cuts for </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cut_type</span><span class="p">))</span>
+
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">query_list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">current_num_queries</span><span class="p">:</span>
+                    <span class="n">combine_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;and&quot;</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="c1"># No exclusion region(s) given.</span>
+                <span class="k">pass</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">field_select</span><span class="o">.</span><span class="n">combine_queries</span><span class="p">(</span><span class="n">combine_list</span><span class="p">,</span> <span class="o">*</span><span class="n">query_list</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Francisco Delgado.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'unknown',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

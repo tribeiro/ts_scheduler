@@ -1,0 +1,30 @@
+lsst\.ts\.scheduler\.setup package
+==================================
+
+Submodules
+----------
+
+lsst\.ts\.scheduler\.setup\.log module
+--------------------------------------
+
+.. automodule:: lsst.ts.scheduler.setup.log
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+lsst\.ts\.scheduler\.setup\.parser module
+-----------------------------------------
+
+.. automodule:: lsst.ts.scheduler.setup.parser
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: lsst.ts.scheduler.setup
+    :members:
+    :undoc-members:
+    :show-inheritance:

@@ -415,8 +415,8 @@ done with the following call:</p>
 <span class="bp">self</span><span class="o">.</span><span class="n">observatoryModel2</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">use_telrot</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>What this does is to synchronize the secondary observatory model with the current observatory state (including the
-current timestamp) and them try to perform the observation. In case of success, <code class="docutils literal"><span class="pre">target</span></code> will be properly filled with
+<p>What this does is synchronize the secondary observatory model with the current observatory state (including the
+current timestamp) and then try to perform the observation. In case of success, <code class="docutils literal"><span class="pre">target</span></code> will be properly filled with
 information regarding the (estimated) telescope state. If if fails, <code class="docutils literal"><span class="pre">target.slewtime</span></code> will be set to <code class="docutils literal"><span class="pre">-1</span></code> and
 <code class="docutils literal"><span class="pre">observatoryModel2.current_state</span></code> will harbor information regarding why it failed. One of the most common sources of
 failed observations is hitting a rotation angle limit. The <code class="docutils literal"><span class="pre">Driver</span></code> must be able to respond to this kind of

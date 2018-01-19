@@ -1,0 +1,700 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>lsst.ts.scheduler.proposals package &mdash; LSST Scheduler unknown documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="LSST Scheduler unknown documentation" href="../index.html"/>
+        <link rel="up" title="lsst.ts.scheduler package" href="lsst.ts.scheduler.html"/>
+        <link rel="next" title="lsst.ts.scheduler.setup package" href="lsst.ts.scheduler.setup.html"/>
+        <link rel="prev" title="lsst.ts.scheduler.kernel package" href="lsst.ts.scheduler.kernel.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> LSST Scheduler
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                unknown
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../scheduler.html">LSST Scheduler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../driver.html">Driver API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../history.html">History</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="lsst.ts.scheduler.html">lsst.ts.scheduler package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="lsst.ts.scheduler.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="lsst.ts.scheduler.fields.html">lsst.ts.scheduler.fields package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lsst.ts.scheduler.kernel.html">lsst.ts.scheduler.kernel package</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">lsst.ts.scheduler.proposals package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-lsst.ts.scheduler.proposals.area_distribution">lsst.ts.scheduler.proposals.area_distribution module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-lsst.ts.scheduler.proposals.proposal">lsst.ts.scheduler.proposals.proposal module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-lsst.ts.scheduler.proposals.scripted">lsst.ts.scheduler.proposals.scripted module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-lsst.ts.scheduler.proposals.sequence">lsst.ts.scheduler.proposals.sequence module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-lsst.ts.scheduler.proposals.subsequence">lsst.ts.scheduler.proposals.subsequence module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-lsst.ts.scheduler.proposals.time_distribution">lsst.ts.scheduler.proposals.time_distribution module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-lsst.ts.scheduler.proposals">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="lsst.ts.scheduler.setup.html">lsst.ts.scheduler.setup package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lsst.ts.scheduler.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lsst.ts.scheduler.html#module-lsst.ts.scheduler.driver">lsst.ts.scheduler.driver module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lsst.ts.scheduler.html#module-lsst.ts.scheduler.main">lsst.ts.scheduler.main module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lsst.ts.scheduler.html#module-lsst.ts.scheduler.version">lsst.ts.scheduler.version module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lsst.ts.scheduler.html#module-lsst.ts.scheduler">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">LSST Scheduler</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="lsst.ts.scheduler.html">lsst.ts.scheduler package</a> &raquo;</li>
+        
+      <li>lsst.ts.scheduler.proposals package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api/lsst.ts.scheduler.proposals.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="lsst-ts-scheduler-proposals-package">
+<h1>lsst.ts.scheduler.proposals package<a class="headerlink" href="#lsst-ts-scheduler-proposals-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-lsst.ts.scheduler.proposals.area_distribution">
+<span id="lsst-ts-scheduler-proposals-area-distribution-module"></span><h2>lsst.ts.scheduler.proposals.area_distribution module<a class="headerlink" href="#module-lsst.ts.scheduler.proposals.area_distribution" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="lsst.ts.scheduler.proposals.area_distribution.AreaDistributionProposal">
+<em class="property">class </em><code class="descclassname">lsst.ts.scheduler.proposals.area_distribution.</code><code class="descname">AreaDistributionProposal</code><span class="sig-paren">(</span><em>propid</em>, <em>name</em>, <em>confdict</em>, <em>skymodel</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/area_distribution.html#AreaDistributionProposal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.area_distribution.AreaDistributionProposal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#lsst.ts.scheduler.proposals.proposal.Proposal" title="lsst.ts.scheduler.proposals.proposal.Proposal"><code class="xref py py-class docutils literal"><span class="pre">lsst.ts.scheduler.proposals.proposal.Proposal</span></code></a></p>
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.area_distribution.AreaDistributionProposal.add_evaluated_target">
+<code class="descname">add_evaluated_target</code><span class="sig-paren">(</span><em>target</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/area_distribution.html#AreaDistributionProposal.add_evaluated_target"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.area_distribution.AreaDistributionProposal.add_evaluated_target" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.area_distribution.AreaDistributionProposal.build_tonight_fields_list">
+<code class="descname">build_tonight_fields_list</code><span class="sig-paren">(</span><em>timestamp</em>, <em>night</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/area_distribution.html#AreaDistributionProposal.build_tonight_fields_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.area_distribution.AreaDistributionProposal.build_tonight_fields_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.area_distribution.AreaDistributionProposal.clear_evaluated_target_list">
+<code class="descname">clear_evaluated_target_list</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/area_distribution.html#AreaDistributionProposal.clear_evaluated_target_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.area_distribution.AreaDistributionProposal.clear_evaluated_target_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.area_distribution.AreaDistributionProposal.close_group">
+<code class="descname">close_group</code><span class="sig-paren">(</span><em>target</em>, <em>text</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/area_distribution.html#AreaDistributionProposal.close_group"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.area_distribution.AreaDistributionProposal.close_group" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.area_distribution.AreaDistributionProposal.end_night">
+<code class="descname">end_night</code><span class="sig-paren">(</span><em>timestamp</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/area_distribution.html#AreaDistributionProposal.end_night"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.area_distribution.AreaDistributionProposal.end_night" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.area_distribution.AreaDistributionProposal.get_evaluated_target_list">
+<code class="descname">get_evaluated_target_list</code><span class="sig-paren">(</span><em>num_targets_to_propose</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/area_distribution.html#AreaDistributionProposal.get_evaluated_target_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.area_distribution.AreaDistributionProposal.get_evaluated_target_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.area_distribution.AreaDistributionProposal.get_filter_goal">
+<code class="descname">get_filter_goal</code><span class="sig-paren">(</span><em>filter</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/area_distribution.html#AreaDistributionProposal.get_filter_goal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.area_distribution.AreaDistributionProposal.get_filter_goal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.area_distribution.AreaDistributionProposal.get_filter_progress">
+<code class="descname">get_filter_progress</code><span class="sig-paren">(</span><em>filter</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/area_distribution.html#AreaDistributionProposal.get_filter_progress"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.area_distribution.AreaDistributionProposal.get_filter_progress" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.area_distribution.AreaDistributionProposal.get_filter_visits">
+<code class="descname">get_filter_visits</code><span class="sig-paren">(</span><em>filter</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/area_distribution.html#AreaDistributionProposal.get_filter_visits"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.area_distribution.AreaDistributionProposal.get_filter_visits" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.area_distribution.AreaDistributionProposal.get_progress">
+<code class="descname">get_progress</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/area_distribution.html#AreaDistributionProposal.get_progress"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.area_distribution.AreaDistributionProposal.get_progress" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.area_distribution.AreaDistributionProposal.observation_fulfills_target">
+<code class="descname">observation_fulfills_target</code><span class="sig-paren">(</span><em>observ</em>, <em>target</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/area_distribution.html#AreaDistributionProposal.observation_fulfills_target"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.area_distribution.AreaDistributionProposal.observation_fulfills_target" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.area_distribution.AreaDistributionProposal.register_observation">
+<code class="descname">register_observation</code><span class="sig-paren">(</span><em>observation</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/area_distribution.html#AreaDistributionProposal.register_observation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.area_distribution.AreaDistributionProposal.register_observation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.area_distribution.AreaDistributionProposal.remove_target">
+<code class="descname">remove_target</code><span class="sig-paren">(</span><em>target</em>, <em>text</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/area_distribution.html#AreaDistributionProposal.remove_target"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.area_distribution.AreaDistributionProposal.remove_target" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.area_distribution.AreaDistributionProposal.start_night">
+<code class="descname">start_night</code><span class="sig-paren">(</span><em>timestamp</em>, <em>filters_mounted_tonight_list</em>, <em>night</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/area_distribution.html#AreaDistributionProposal.start_night"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.area_distribution.AreaDistributionProposal.start_night" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.area_distribution.AreaDistributionProposal.start_survey">
+<code class="descname">start_survey</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/area_distribution.html#AreaDistributionProposal.start_survey"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.area_distribution.AreaDistributionProposal.start_survey" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.area_distribution.AreaDistributionProposal.suggest_targets">
+<code class="descname">suggest_targets</code><span class="sig-paren">(</span><em>timestamp</em>, <em>deepdrilling_target</em>, <em>constrained_filter</em>, <em>cloud</em>, <em>seeing</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/area_distribution.html#AreaDistributionProposal.suggest_targets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.area_distribution.AreaDistributionProposal.suggest_targets" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.area_distribution.AreaDistributionProposal.time_window">
+<code class="descname">time_window</code><span class="sig-paren">(</span><em>deltaT</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/area_distribution.html#AreaDistributionProposal.time_window"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.area_distribution.AreaDistributionProposal.time_window" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-lsst.ts.scheduler.proposals.proposal">
+<span id="lsst-ts-scheduler-proposals-proposal-module"></span><h2>lsst.ts.scheduler.proposals.proposal module<a class="headerlink" href="#module-lsst.ts.scheduler.proposals.proposal" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="lsst.ts.scheduler.proposals.proposal.Proposal">
+<em class="property">class </em><code class="descclassname">lsst.ts.scheduler.proposals.proposal.</code><code class="descname">Proposal</code><span class="sig-paren">(</span><em>propid</em>, <em>name</em>, <em>confdict</em>, <em>skymodel</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/proposal.html#Proposal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.proposal.Proposal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">future.types.newobject.newobject</span></code></p>
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.proposal.Proposal.configure_constraints">
+<code class="descname">configure_constraints</code><span class="sig-paren">(</span><em>params</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/proposal.html#Proposal.configure_constraints"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.proposal.Proposal.configure_constraints" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.proposal.Proposal.end_night">
+<code class="descname">end_night</code><span class="sig-paren">(</span><em>timestamp</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/proposal.html#Proposal.end_night"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.proposal.Proposal.end_night" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.proposal.Proposal.end_survey">
+<code class="descname">end_survey</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/proposal.html#Proposal.end_survey"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.proposal.Proposal.end_survey" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.proposal.Proposal.select_fields">
+<code class="descname">select_fields</code><span class="sig-paren">(</span><em>timestamp</em>, <em>night</em>, <em>sky_region</em>, <em>sky_exclusions</em>, <em>sky_nightly_bounds</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/proposal.html#Proposal.select_fields"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.proposal.Proposal.select_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.proposal.Proposal.start_night">
+<code class="descname">start_night</code><span class="sig-paren">(</span><em>timestamp</em>, <em>filters_mounted_tonight_list</em>, <em>night</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/proposal.html#Proposal.start_night"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.proposal.Proposal.start_night" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.proposal.Proposal.start_survey">
+<code class="descname">start_survey</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/proposal.html#Proposal.start_survey"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.proposal.Proposal.start_survey" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.proposal.Proposal.suggest_targets">
+<code class="descname">suggest_targets</code><span class="sig-paren">(</span><em>time</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/proposal.html#Proposal.suggest_targets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.proposal.Proposal.suggest_targets" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-lsst.ts.scheduler.proposals.scripted">
+<span id="lsst-ts-scheduler-proposals-scripted-module"></span><h2>lsst.ts.scheduler.proposals.scripted module<a class="headerlink" href="#module-lsst.ts.scheduler.proposals.scripted" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="lsst.ts.scheduler.proposals.scripted.ScriptedProposal">
+<em class="property">class </em><code class="descclassname">lsst.ts.scheduler.proposals.scripted.</code><code class="descname">ScriptedProposal</code><span class="sig-paren">(</span><em>propid</em>, <em>name</em>, <em>confdict</em>, <em>scriptfile</em>, <em>skymodel</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/scripted.html#ScriptedProposal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.scripted.ScriptedProposal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#lsst.ts.scheduler.proposals.proposal.Proposal" title="lsst.ts.scheduler.proposals.proposal.Proposal"><code class="xref py py-class docutils literal"><span class="pre">lsst.ts.scheduler.proposals.proposal.Proposal</span></code></a></p>
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.scripted.ScriptedProposal.read_script">
+<code class="descname">read_script</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/scripted.html#ScriptedProposal.read_script"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.scripted.ScriptedProposal.read_script" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.scripted.ScriptedProposal.register_observation">
+<code class="descname">register_observation</code><span class="sig-paren">(</span><em>observation</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/scripted.html#ScriptedProposal.register_observation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.scripted.ScriptedProposal.register_observation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.scripted.ScriptedProposal.suggest_targets">
+<code class="descname">suggest_targets</code><span class="sig-paren">(</span><em>time</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/scripted.html#ScriptedProposal.suggest_targets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.scripted.ScriptedProposal.suggest_targets" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-lsst.ts.scheduler.proposals.sequence">
+<span id="lsst-ts-scheduler-proposals-sequence-module"></span><h2>lsst.ts.scheduler.proposals.sequence module<a class="headerlink" href="#module-lsst.ts.scheduler.proposals.sequence" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="lsst.ts.scheduler.proposals.sequence.Sequence">
+<em class="property">class </em><code class="descclassname">lsst.ts.scheduler.proposals.sequence.</code><code class="descname">Sequence</code><span class="sig-paren">(</span><em>propid</em>, <em>field</em>, <em>params</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/sequence.html#Sequence"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.sequence.Sequence" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">future.types.newobject.newobject</span></code></p>
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.sequence.Sequence.disable_subsequence">
+<code class="descname">disable_subsequence</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/sequence.html#Sequence.disable_subsequence"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.sequence.Sequence.disable_subsequence" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.sequence.Sequence.get_next_filter_list_subsequence">
+<code class="descname">get_next_filter_list_subsequence</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/sequence.html#Sequence.get_next_filter_list_subsequence"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.sequence.Sequence.get_next_filter_list_subsequence" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.sequence.Sequence.get_next_target_subsequence">
+<code class="descname">get_next_target_subsequence</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/sequence.html#Sequence.get_next_target_subsequence"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.sequence.Sequence.get_next_target_subsequence" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.sequence.Sequence.is_active">
+<code class="descname">is_active</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/sequence.html#Sequence.is_active"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.sequence.Sequence.is_active" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.sequence.Sequence.is_complete">
+<code class="descname">is_complete</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/sequence.html#Sequence.is_complete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.sequence.Sequence.is_complete" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.sequence.Sequence.is_idle">
+<code class="descname">is_idle</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/sequence.html#Sequence.is_idle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.sequence.Sequence.is_idle" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.sequence.Sequence.is_idle_or_active">
+<code class="descname">is_idle_or_active</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/sequence.html#Sequence.is_idle_or_active"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.sequence.Sequence.is_idle_or_active" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.sequence.Sequence.is_in_deep_drilling">
+<code class="descname">is_in_deep_drilling</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/sequence.html#Sequence.is_in_deep_drilling"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.sequence.Sequence.is_in_deep_drilling" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.sequence.Sequence.is_lost">
+<code class="descname">is_lost</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/sequence.html#Sequence.is_lost"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.sequence.Sequence.is_lost" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.sequence.Sequence.miss_observation_subsequence">
+<code class="descname">miss_observation_subsequence</code><span class="sig-paren">(</span><em>name</em>, <em>time</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/sequence.html#Sequence.miss_observation_subsequence"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.sequence.Sequence.miss_observation_subsequence" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.sequence.Sequence.register_observation">
+<code class="descname">register_observation</code><span class="sig-paren">(</span><em>observation</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/sequence.html#Sequence.register_observation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.sequence.Sequence.register_observation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.sequence.Sequence.register_observation_subsequence">
+<code class="descname">register_observation_subsequence</code><span class="sig-paren">(</span><em>name</em>, <em>time</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/sequence.html#Sequence.register_observation_subsequence"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.sequence.Sequence.register_observation_subsequence" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.sequence.Sequence.restart">
+<code class="descname">restart</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/sequence.html#Sequence.restart"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.sequence.Sequence.restart" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.sequence.Sequence.time_window_subsequence">
+<code class="descname">time_window_subsequence</code><span class="sig-paren">(</span><em>name</em>, <em>time</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/sequence.html#Sequence.time_window_subsequence"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.sequence.Sequence.time_window_subsequence" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.sequence.Sequence.update_state">
+<code class="descname">update_state</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/sequence.html#Sequence.update_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.sequence.Sequence.update_state" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-lsst.ts.scheduler.proposals.subsequence">
+<span id="lsst-ts-scheduler-proposals-subsequence-module"></span><h2>lsst.ts.scheduler.proposals.subsequence module<a class="headerlink" href="#module-lsst.ts.scheduler.proposals.subsequence" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="lsst.ts.scheduler.proposals.subsequence.Subsequence">
+<em class="property">class </em><code class="descclassname">lsst.ts.scheduler.proposals.subsequence.</code><code class="descname">Subsequence</code><span class="sig-paren">(</span><em>propid</em>, <em>field</em>, <em>name</em>, <em>params</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/subsequence.html#Subsequence"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.subsequence.Subsequence" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">future.types.newobject.newobject</span></code></p>
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.subsequence.Subsequence.get_next_filter_list">
+<code class="descname">get_next_filter_list</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/subsequence.html#Subsequence.get_next_filter_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.subsequence.Subsequence.get_next_filter_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.subsequence.Subsequence.get_next_target">
+<code class="descname">get_next_target</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/subsequence.html#Subsequence.get_next_target"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.subsequence.Subsequence.get_next_target" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.subsequence.Subsequence.is_active">
+<code class="descname">is_active</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/subsequence.html#Subsequence.is_active"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.subsequence.Subsequence.is_active" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.subsequence.Subsequence.is_complete">
+<code class="descname">is_complete</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/subsequence.html#Subsequence.is_complete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.subsequence.Subsequence.is_complete" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.subsequence.Subsequence.is_idle">
+<code class="descname">is_idle</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/subsequence.html#Subsequence.is_idle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.subsequence.Subsequence.is_idle" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.subsequence.Subsequence.is_idle_or_active">
+<code class="descname">is_idle_or_active</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/subsequence.html#Subsequence.is_idle_or_active"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.subsequence.Subsequence.is_idle_or_active" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.subsequence.Subsequence.is_in_deep_drilling">
+<code class="descname">is_in_deep_drilling</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/subsequence.html#Subsequence.is_in_deep_drilling"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.subsequence.Subsequence.is_in_deep_drilling" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.subsequence.Subsequence.is_lost">
+<code class="descname">is_lost</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/subsequence.html#Subsequence.is_lost"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.subsequence.Subsequence.is_lost" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.subsequence.Subsequence.miss_observation">
+<code class="descname">miss_observation</code><span class="sig-paren">(</span><em>time</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/subsequence.html#Subsequence.miss_observation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.subsequence.Subsequence.miss_observation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.subsequence.Subsequence.register_observation">
+<code class="descname">register_observation</code><span class="sig-paren">(</span><em>time</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/subsequence.html#Subsequence.register_observation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.subsequence.Subsequence.register_observation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.subsequence.Subsequence.restart">
+<code class="descname">restart</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/subsequence.html#Subsequence.restart"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.subsequence.Subsequence.restart" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.subsequence.Subsequence.time_window">
+<code class="descname">time_window</code><span class="sig-paren">(</span><em>time</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/subsequence.html#Subsequence.time_window"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.subsequence.Subsequence.time_window" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.subsequence.Subsequence.update_state">
+<code class="descname">update_state</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/subsequence.html#Subsequence.update_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.subsequence.Subsequence.update_state" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-lsst.ts.scheduler.proposals.time_distribution">
+<span id="lsst-ts-scheduler-proposals-time-distribution-module"></span><h2>lsst.ts.scheduler.proposals.time_distribution module<a class="headerlink" href="#module-lsst.ts.scheduler.proposals.time_distribution" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="lsst.ts.scheduler.proposals.time_distribution.TimeDistributionProposal">
+<em class="property">class </em><code class="descclassname">lsst.ts.scheduler.proposals.time_distribution.</code><code class="descname">TimeDistributionProposal</code><span class="sig-paren">(</span><em>propid</em>, <em>name</em>, <em>confdict</em>, <em>skymodel</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/time_distribution.html#TimeDistributionProposal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.time_distribution.TimeDistributionProposal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#lsst.ts.scheduler.proposals.proposal.Proposal" title="lsst.ts.scheduler.proposals.proposal.Proposal"><code class="xref py py-class docutils literal"><span class="pre">lsst.ts.scheduler.proposals.proposal.Proposal</span></code></a></p>
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.time_distribution.TimeDistributionProposal.add_evaluated_target">
+<code class="descname">add_evaluated_target</code><span class="sig-paren">(</span><em>target</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/time_distribution.html#TimeDistributionProposal.add_evaluated_target"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.time_distribution.TimeDistributionProposal.add_evaluated_target" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.time_distribution.TimeDistributionProposal.build_tonight_fields_list">
+<code class="descname">build_tonight_fields_list</code><span class="sig-paren">(</span><em>timestamp</em>, <em>night</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/time_distribution.html#TimeDistributionProposal.build_tonight_fields_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.time_distribution.TimeDistributionProposal.build_tonight_fields_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.time_distribution.TimeDistributionProposal.clear_evaluated_target_list">
+<code class="descname">clear_evaluated_target_list</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/time_distribution.html#TimeDistributionProposal.clear_evaluated_target_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.time_distribution.TimeDistributionProposal.clear_evaluated_target_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.time_distribution.TimeDistributionProposal.create_sequence">
+<code class="descname">create_sequence</code><span class="sig-paren">(</span><em>field</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/time_distribution.html#TimeDistributionProposal.create_sequence"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.time_distribution.TimeDistributionProposal.create_sequence" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.time_distribution.TimeDistributionProposal.end_night">
+<code class="descname">end_night</code><span class="sig-paren">(</span><em>timestamp</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/time_distribution.html#TimeDistributionProposal.end_night"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.time_distribution.TimeDistributionProposal.end_night" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.time_distribution.TimeDistributionProposal.evaluate_sequence_continuation">
+<code class="descname">evaluate_sequence_continuation</code><span class="sig-paren">(</span><em>fieldid</em>, <em>text</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/time_distribution.html#TimeDistributionProposal.evaluate_sequence_continuation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.time_distribution.TimeDistributionProposal.evaluate_sequence_continuation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.time_distribution.TimeDistributionProposal.get_evaluated_target_list">
+<code class="descname">get_evaluated_target_list</code><span class="sig-paren">(</span><em>num_targets_to_propose</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/time_distribution.html#TimeDistributionProposal.get_evaluated_target_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.time_distribution.TimeDistributionProposal.get_evaluated_target_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.time_distribution.TimeDistributionProposal.get_filter_goal">
+<code class="descname">get_filter_goal</code><span class="sig-paren">(</span><em>filter</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/time_distribution.html#TimeDistributionProposal.get_filter_goal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.time_distribution.TimeDistributionProposal.get_filter_goal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.time_distribution.TimeDistributionProposal.get_filter_progress">
+<code class="descname">get_filter_progress</code><span class="sig-paren">(</span><em>filter</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/time_distribution.html#TimeDistributionProposal.get_filter_progress"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.time_distribution.TimeDistributionProposal.get_filter_progress" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.time_distribution.TimeDistributionProposal.get_filter_visits">
+<code class="descname">get_filter_visits</code><span class="sig-paren">(</span><em>filter</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/time_distribution.html#TimeDistributionProposal.get_filter_visits"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.time_distribution.TimeDistributionProposal.get_filter_visits" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.time_distribution.TimeDistributionProposal.get_progress">
+<code class="descname">get_progress</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/time_distribution.html#TimeDistributionProposal.get_progress"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.time_distribution.TimeDistributionProposal.get_progress" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.time_distribution.TimeDistributionProposal.observation_fulfills_target">
+<code class="descname">observation_fulfills_target</code><span class="sig-paren">(</span><em>observ</em>, <em>target</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/time_distribution.html#TimeDistributionProposal.observation_fulfills_target"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.time_distribution.TimeDistributionProposal.observation_fulfills_target" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.time_distribution.TimeDistributionProposal.register_observation">
+<code class="descname">register_observation</code><span class="sig-paren">(</span><em>observation</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/time_distribution.html#TimeDistributionProposal.register_observation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.time_distribution.TimeDistributionProposal.register_observation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.time_distribution.TimeDistributionProposal.remove_sequence">
+<code class="descname">remove_sequence</code><span class="sig-paren">(</span><em>fieldid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/time_distribution.html#TimeDistributionProposal.remove_sequence"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.time_distribution.TimeDistributionProposal.remove_sequence" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.time_distribution.TimeDistributionProposal.start_night">
+<code class="descname">start_night</code><span class="sig-paren">(</span><em>timestamp</em>, <em>filters_mounted_tonight_list</em>, <em>night</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/time_distribution.html#TimeDistributionProposal.start_night"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.time_distribution.TimeDistributionProposal.start_night" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.time_distribution.TimeDistributionProposal.start_survey">
+<code class="descname">start_survey</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/time_distribution.html#TimeDistributionProposal.start_survey"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.time_distribution.TimeDistributionProposal.start_survey" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.proposals.time_distribution.TimeDistributionProposal.suggest_targets">
+<code class="descname">suggest_targets</code><span class="sig-paren">(</span><em>timestamp</em>, <em>deepdrilling_target</em>, <em>constrained_filter</em>, <em>cloud</em>, <em>seeing</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/time_distribution.html#TimeDistributionProposal.suggest_targets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.time_distribution.TimeDistributionProposal.suggest_targets" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="lsst.ts.scheduler.proposals.time_distribution.TimeDistributionProposalParameters">
+<em class="property">class </em><code class="descclassname">lsst.ts.scheduler.proposals.time_distribution.</code><code class="descname">TimeDistributionProposalParameters</code><span class="sig-paren">(</span><em>confdict</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/proposals/time_distribution.html#TimeDistributionProposalParameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.proposals.time_distribution.TimeDistributionProposalParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">future.types.newobject.newobject</span></code></p>
+<dl class="attribute">
+<dt id="lsst.ts.scheduler.proposals.time_distribution.TimeDistributionProposalParameters.min_alt">
+<code class="descname">min_alt</code><a class="headerlink" href="#lsst.ts.scheduler.proposals.time_distribution.TimeDistributionProposalParameters.min_alt" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-lsst.ts.scheduler.proposals">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-lsst.ts.scheduler.proposals" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="lsst.ts.scheduler.setup.html" class="btn btn-neutral float-right" title="lsst.ts.scheduler.setup package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="lsst.ts.scheduler.kernel.html" class="btn btn-neutral" title="lsst.ts.scheduler.kernel package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Francisco Delgado.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'unknown',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

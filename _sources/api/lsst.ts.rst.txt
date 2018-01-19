@@ -1,0 +1,17 @@
+lsst\.ts package
+================
+
+Subpackages
+-----------
+
+.. toctree::
+
+    lsst.ts.scheduler
+
+Module contents
+---------------
+
+.. automodule:: lsst.ts
+    :members:
+    :undoc-members:
+    :show-inheritance:

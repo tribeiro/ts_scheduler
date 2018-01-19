@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>lsst.ts.scheduler &mdash; LSST Scheduler unknown documentation</title>
+  <title>lsst.ts.scheduler package &mdash; LSST Scheduler unknown documentation</title>
   
 
   
@@ -36,6 +36,7 @@
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
     <link rel="top" title="LSST Scheduler unknown documentation" href="../index.html"/>
+        <link rel="next" title="lsst.ts.scheduler.fields package" href="lsst.ts.scheduler.fields.html"/>
         <link rel="prev" title="History" href="../history.html"/> 
 
   
@@ -98,7 +99,21 @@
 <li class="toctree-l1"><a class="reference internal" href="../history.html">History</a></li>
 </ul>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">lsst.ts.scheduler</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">lsst.ts.scheduler package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lsst.ts.scheduler.fields.html">lsst.ts.scheduler.fields package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lsst.ts.scheduler.kernel.html">lsst.ts.scheduler.kernel package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lsst.ts.scheduler.proposals.html">lsst.ts.scheduler.proposals package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lsst.ts.scheduler.setup.html">lsst.ts.scheduler.setup package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-lsst.ts.scheduler.driver">lsst.ts.scheduler.driver module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-lsst.ts.scheduler.main">lsst.ts.scheduler.main module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-lsst.ts.scheduler.version">lsst.ts.scheduler.version module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-lsst.ts.scheduler">Module contents</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -143,7 +158,7 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>lsst.ts.scheduler</li>
+      <li>lsst.ts.scheduler package</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -162,8 +177,314 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-lsst.ts.scheduler">
-<span id="lsst-ts-scheduler"></span><h1>lsst.ts.scheduler<a class="headerlink" href="#module-lsst.ts.scheduler" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="lsst-ts-scheduler-package">
+<h1>lsst.ts.scheduler package<a class="headerlink" href="#lsst-ts-scheduler-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="lsst.ts.scheduler.fields.html">lsst.ts.scheduler.fields package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lsst.ts.scheduler.fields.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lsst.ts.scheduler.fields.html#module-lsst.ts.scheduler.fields.create_fields_data">lsst.ts.scheduler.fields.create_fields_data module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lsst.ts.scheduler.fields.html#module-lsst.ts.scheduler.fields.create_fields_db">lsst.ts.scheduler.fields.create_fields_db module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lsst.ts.scheduler.fields.html#module-lsst.ts.scheduler.fields.create_fields_table">lsst.ts.scheduler.fields.create_fields_table module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lsst.ts.scheduler.fields.html#module-lsst.ts.scheduler.fields.field_selection">lsst.ts.scheduler.fields.field_selection module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lsst.ts.scheduler.fields.html#module-lsst.ts.scheduler.fields.fields_database">lsst.ts.scheduler.fields.fields_database module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lsst.ts.scheduler.fields.html#module-lsst.ts.scheduler.fields.ingest_fields_data">lsst.ts.scheduler.fields.ingest_fields_data module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lsst.ts.scheduler.fields.html#module-lsst.ts.scheduler.fields.make_fields_database">lsst.ts.scheduler.fields.make_fields_database module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lsst.ts.scheduler.fields.html#module-lsst.ts.scheduler.fields">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lsst.ts.scheduler.kernel.html">lsst.ts.scheduler.kernel package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lsst.ts.scheduler.kernel.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lsst.ts.scheduler.kernel.html#module-lsst.ts.scheduler.kernel.definitions">lsst.ts.scheduler.kernel.definitions module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lsst.ts.scheduler.kernel.html#module-lsst.ts.scheduler.kernel.field">lsst.ts.scheduler.kernel.field module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lsst.ts.scheduler.kernel.html#module-lsst.ts.scheduler.kernel">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lsst.ts.scheduler.proposals.html">lsst.ts.scheduler.proposals package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lsst.ts.scheduler.proposals.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lsst.ts.scheduler.proposals.html#module-lsst.ts.scheduler.proposals.area_distribution">lsst.ts.scheduler.proposals.area_distribution module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lsst.ts.scheduler.proposals.html#module-lsst.ts.scheduler.proposals.proposal">lsst.ts.scheduler.proposals.proposal module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lsst.ts.scheduler.proposals.html#module-lsst.ts.scheduler.proposals.scripted">lsst.ts.scheduler.proposals.scripted module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lsst.ts.scheduler.proposals.html#module-lsst.ts.scheduler.proposals.sequence">lsst.ts.scheduler.proposals.sequence module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lsst.ts.scheduler.proposals.html#module-lsst.ts.scheduler.proposals.subsequence">lsst.ts.scheduler.proposals.subsequence module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lsst.ts.scheduler.proposals.html#module-lsst.ts.scheduler.proposals.time_distribution">lsst.ts.scheduler.proposals.time_distribution module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lsst.ts.scheduler.proposals.html#module-lsst.ts.scheduler.proposals">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lsst.ts.scheduler.setup.html">lsst.ts.scheduler.setup package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lsst.ts.scheduler.setup.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lsst.ts.scheduler.setup.html#module-lsst.ts.scheduler.setup.log">lsst.ts.scheduler.setup.log module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lsst.ts.scheduler.setup.html#module-lsst.ts.scheduler.setup.parser">lsst.ts.scheduler.setup.parser module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lsst.ts.scheduler.setup.html#module-lsst.ts.scheduler.setup">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-lsst.ts.scheduler.driver">
+<span id="lsst-ts-scheduler-driver-module"></span><h2>lsst.ts.scheduler.driver module<a class="headerlink" href="#module-lsst.ts.scheduler.driver" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="lsst.ts.scheduler.driver.Driver">
+<em class="property">class </em><code class="descclassname">lsst.ts.scheduler.driver.</code><code class="descname">Driver</code><a class="reference internal" href="../_modules/lsst/ts/scheduler/driver.html#Driver"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.driver.Driver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">future.types.newobject.newobject</span></code></p>
+<dl class="method">
+<dt id="lsst.ts.scheduler.driver.Driver.build_fields_dict">
+<code class="descname">build_fields_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/driver.html#Driver.build_fields_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.driver.Driver.build_fields_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.driver.Driver.compute_filterchange_cost">
+<code class="descname">compute_filterchange_cost</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/driver.html#Driver.compute_filterchange_cost"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.driver.Driver.compute_filterchange_cost" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.driver.Driver.compute_slewtime_cost">
+<code class="descname">compute_slewtime_cost</code><span class="sig-paren">(</span><em>slewtime</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/driver.html#Driver.compute_slewtime_cost"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.driver.Driver.compute_slewtime_cost" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.driver.Driver.configure">
+<code class="descname">configure</code><span class="sig-paren">(</span><em>confdict</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/driver.html#Driver.configure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.driver.Driver.configure" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.driver.Driver.configure_camera">
+<code class="descname">configure_camera</code><span class="sig-paren">(</span><em>confdict</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/driver.html#Driver.configure_camera"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.driver.Driver.configure_camera" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.driver.Driver.configure_dome">
+<code class="descname">configure_dome</code><span class="sig-paren">(</span><em>confdict</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/driver.html#Driver.configure_dome"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.driver.Driver.configure_dome" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.driver.Driver.configure_duration">
+<code class="descname">configure_duration</code><span class="sig-paren">(</span><em>survey_duration</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/driver.html#Driver.configure_duration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.driver.Driver.configure_duration" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.driver.Driver.configure_location">
+<code class="descname">configure_location</code><span class="sig-paren">(</span><em>confdict</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/driver.html#Driver.configure_location"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.driver.Driver.configure_location" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.driver.Driver.configure_observatory">
+<code class="descname">configure_observatory</code><span class="sig-paren">(</span><em>confdict</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/driver.html#Driver.configure_observatory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.driver.Driver.configure_observatory" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.driver.Driver.configure_optics">
+<code class="descname">configure_optics</code><span class="sig-paren">(</span><em>confdict</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/driver.html#Driver.configure_optics"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.driver.Driver.configure_optics" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.driver.Driver.configure_park">
+<code class="descname">configure_park</code><span class="sig-paren">(</span><em>confdict</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/driver.html#Driver.configure_park"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.driver.Driver.configure_park" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.driver.Driver.configure_rotator">
+<code class="descname">configure_rotator</code><span class="sig-paren">(</span><em>confdict</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/driver.html#Driver.configure_rotator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.driver.Driver.configure_rotator" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.driver.Driver.configure_slew">
+<code class="descname">configure_slew</code><span class="sig-paren">(</span><em>confdict</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/driver.html#Driver.configure_slew"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.driver.Driver.configure_slew" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.driver.Driver.configure_survey">
+<code class="descname">configure_survey</code><span class="sig-paren">(</span><em>survey_conf_file</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/driver.html#Driver.configure_survey"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.driver.Driver.configure_survey" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.driver.Driver.configure_telescope">
+<code class="descname">configure_telescope</code><span class="sig-paren">(</span><em>confdict</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/driver.html#Driver.configure_telescope"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.driver.Driver.configure_telescope" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.driver.Driver.create_area_proposal">
+<code class="descname">create_area_proposal</code><span class="sig-paren">(</span><em>propid</em>, <em>name</em>, <em>config_dict</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/driver.html#Driver.create_area_proposal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.driver.Driver.create_area_proposal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.driver.Driver.create_sequence_proposal">
+<code class="descname">create_sequence_proposal</code><span class="sig-paren">(</span><em>propid</em>, <em>name</em>, <em>config_dict</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/driver.html#Driver.create_sequence_proposal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.driver.Driver.create_sequence_proposal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.driver.Driver.end_night">
+<code class="descname">end_night</code><span class="sig-paren">(</span><em>timestamp</em>, <em>night</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/driver.html#Driver.end_night"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.driver.Driver.end_night" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.driver.Driver.end_survey">
+<code class="descname">end_survey</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/driver.html#Driver.end_survey"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.driver.Driver.end_survey" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.driver.Driver.get_fields_dict">
+<code class="descname">get_fields_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/driver.html#Driver.get_fields_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.driver.Driver.get_fields_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.driver.Driver.get_need_filter_swap">
+<code class="descname">get_need_filter_swap</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/driver.html#Driver.get_need_filter_swap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.driver.Driver.get_need_filter_swap" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.driver.Driver.observation_fulfills_target">
+<code class="descname">observation_fulfills_target</code><span class="sig-paren">(</span><em>observ</em>, <em>target</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/driver.html#Driver.observation_fulfills_target"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.driver.Driver.observation_fulfills_target" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.driver.Driver.register_observation">
+<code class="descname">register_observation</code><span class="sig-paren">(</span><em>observation</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/driver.html#Driver.register_observation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.driver.Driver.register_observation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.driver.Driver.select_next_target">
+<code class="descname">select_next_target</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/driver.html#Driver.select_next_target"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.driver.Driver.select_next_target" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.driver.Driver.start_night">
+<code class="descname">start_night</code><span class="sig-paren">(</span><em>timestamp</em>, <em>night</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/driver.html#Driver.start_night"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.driver.Driver.start_night" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.driver.Driver.start_survey">
+<code class="descname">start_survey</code><span class="sig-paren">(</span><em>timestamp</em>, <em>night</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/driver.html#Driver.start_survey"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.driver.Driver.start_survey" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.driver.Driver.swap_filter">
+<code class="descname">swap_filter</code><span class="sig-paren">(</span><em>filter_to_unmount</em>, <em>filter_to_mount</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/driver.html#Driver.swap_filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.driver.Driver.swap_filter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.driver.Driver.update_external_conditions">
+<code class="descname">update_external_conditions</code><span class="sig-paren">(</span><em>cloud</em>, <em>seeing</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/driver.html#Driver.update_external_conditions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.driver.Driver.update_external_conditions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.driver.Driver.update_internal_conditions">
+<code class="descname">update_internal_conditions</code><span class="sig-paren">(</span><em>observatory_state</em>, <em>night</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/driver.html#Driver.update_internal_conditions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.driver.Driver.update_internal_conditions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.driver.Driver.update_time">
+<code class="descname">update_time</code><span class="sig-paren">(</span><em>timestamp</em>, <em>night</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/driver.html#Driver.update_time"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.driver.Driver.update_time" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-lsst.ts.scheduler.main">
+<span id="lsst-ts-scheduler-main-module"></span><h2>lsst.ts.scheduler.main module<a class="headerlink" href="#module-lsst.ts.scheduler.main" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="lsst.ts.scheduler.main.Main">
+<em class="property">class </em><code class="descclassname">lsst.ts.scheduler.main.</code><code class="descname">Main</code><span class="sig-paren">(</span><em>options</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/main.html#Main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.main.Main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">future.types.newobject.newobject</span></code></p>
+<dl class="method">
+<dt id="lsst.ts.scheduler.main.Main.rtopic_area_prop_config">
+<code class="descname">rtopic_area_prop_config</code><span class="sig-paren">(</span><em>topic_areapropconf</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/main.html#Main.rtopic_area_prop_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.main.Main.rtopic_area_prop_config" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.main.Main.rtopic_camera_config">
+<code class="descname">rtopic_camera_config</code><span class="sig-paren">(</span><em>topic_camera_config</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/main.html#Main.rtopic_camera_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.main.Main.rtopic_camera_config" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.main.Main.rtopic_dome_config">
+<code class="descname">rtopic_dome_config</code><span class="sig-paren">(</span><em>topic_dome_config</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/main.html#Main.rtopic_dome_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.main.Main.rtopic_dome_config" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.main.Main.rtopic_driver_config">
+<code class="descname">rtopic_driver_config</code><span class="sig-paren">(</span><em>topic_driver_config</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/main.html#Main.rtopic_driver_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.main.Main.rtopic_driver_config" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.main.Main.rtopic_location_config">
+<code class="descname">rtopic_location_config</code><span class="sig-paren">(</span><em>topic_location_config</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/main.html#Main.rtopic_location_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.main.Main.rtopic_location_config" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.main.Main.rtopic_observation">
+<code class="descname">rtopic_observation</code><span class="sig-paren">(</span><em>topic_observation</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/main.html#Main.rtopic_observation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.main.Main.rtopic_observation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.main.Main.rtopic_observatory_state">
+<code class="descname">rtopic_observatory_state</code><span class="sig-paren">(</span><em>topic_state</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/main.html#Main.rtopic_observatory_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.main.Main.rtopic_observatory_state" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.main.Main.rtopic_optics_config">
+<code class="descname">rtopic_optics_config</code><span class="sig-paren">(</span><em>topic_optics_config</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/main.html#Main.rtopic_optics_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.main.Main.rtopic_optics_config" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.main.Main.rtopic_park_config">
+<code class="descname">rtopic_park_config</code><span class="sig-paren">(</span><em>topic_park_config</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/main.html#Main.rtopic_park_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.main.Main.rtopic_park_config" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.main.Main.rtopic_rotator_config">
+<code class="descname">rtopic_rotator_config</code><span class="sig-paren">(</span><em>topic_rotator_config</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/main.html#Main.rtopic_rotator_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.main.Main.rtopic_rotator_config" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.main.Main.rtopic_seq_prop_config">
+<code class="descname">rtopic_seq_prop_config</code><span class="sig-paren">(</span><em>topic_seqpropconf</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/main.html#Main.rtopic_seq_prop_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.main.Main.rtopic_seq_prop_config" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.main.Main.rtopic_slew_config">
+<code class="descname">rtopic_slew_config</code><span class="sig-paren">(</span><em>topic_slew_config</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/main.html#Main.rtopic_slew_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.main.Main.rtopic_slew_config" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.main.Main.rtopic_telescope_config">
+<code class="descname">rtopic_telescope_config</code><span class="sig-paren">(</span><em>topic_telescope_config</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/main.html#Main.rtopic_telescope_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.main.Main.rtopic_telescope_config" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.main.Main.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/main.html#Main.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.main.Main.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.main.Main.sal_init">
+<code class="descname">sal_init</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/main.html#Main.sal_init"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.main.Main.sal_init" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.main.Main.wtopic_interestedProposal">
+<code class="descname">wtopic_interestedProposal</code><span class="sig-paren">(</span><em>topic</em>, <em>targetId</em>, <em>target_list</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/main.html#Main.wtopic_interestedProposal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.main.Main.wtopic_interestedProposal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.main.Main.wtopic_target">
+<code class="descname">wtopic_target</code><span class="sig-paren">(</span><em>topicTarget</em>, <em>target</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/main.html#Main.wtopic_target"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.main.Main.wtopic_target" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-lsst.ts.scheduler.version">
+<span id="lsst-ts-scheduler-version-module"></span><h2>lsst.ts.scheduler.version module<a class="headerlink" href="#module-lsst.ts.scheduler.version" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-lsst.ts.scheduler">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-lsst.ts.scheduler" title="Permalink to this headline">¶</a></h2>
+</div>
 </div>
 
 
@@ -175,6 +496,8 @@
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="lsst.ts.scheduler.fields.html" class="btn btn-neutral float-right" title="lsst.ts.scheduler.fields package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="../history.html" class="btn btn-neutral" title="History" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

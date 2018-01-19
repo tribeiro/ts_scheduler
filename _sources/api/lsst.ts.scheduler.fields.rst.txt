@@ -1,0 +1,70 @@
+lsst\.ts\.scheduler\.fields package
+===================================
+
+Submodules
+----------
+
+lsst\.ts\.scheduler\.fields\.create\_fields\_data module
+--------------------------------------------------------
+
+.. automodule:: lsst.ts.scheduler.fields.create_fields_data
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+lsst\.ts\.scheduler\.fields\.create\_fields\_db module
+------------------------------------------------------
+
+.. automodule:: lsst.ts.scheduler.fields.create_fields_db
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+lsst\.ts\.scheduler\.fields\.create\_fields\_table module
+---------------------------------------------------------
+
+.. automodule:: lsst.ts.scheduler.fields.create_fields_table
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+lsst\.ts\.scheduler\.fields\.field\_selection module
+----------------------------------------------------
+
+.. automodule:: lsst.ts.scheduler.fields.field_selection
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+lsst\.ts\.scheduler\.fields\.fields\_database module
+----------------------------------------------------
+
+.. automodule:: lsst.ts.scheduler.fields.fields_database
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+lsst\.ts\.scheduler\.fields\.ingest\_fields\_data module
+--------------------------------------------------------
+
+.. automodule:: lsst.ts.scheduler.fields.ingest_fields_data
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+lsst\.ts\.scheduler\.fields\.make\_fields\_database module
+----------------------------------------------------------
+
+.. automodule:: lsst.ts.scheduler.fields.make_fields_database
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: lsst.ts.scheduler.fields
+    :members:
+    :undoc-members:
+    :show-inheritance:

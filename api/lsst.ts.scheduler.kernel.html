@@ -1,0 +1,403 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>lsst.ts.scheduler.kernel package &mdash; LSST Scheduler unknown documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="LSST Scheduler unknown documentation" href="../index.html"/>
+        <link rel="up" title="lsst.ts.scheduler package" href="lsst.ts.scheduler.html"/>
+        <link rel="next" title="lsst.ts.scheduler.proposals package" href="lsst.ts.scheduler.proposals.html"/>
+        <link rel="prev" title="lsst.ts.scheduler.fields package" href="lsst.ts.scheduler.fields.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> LSST Scheduler
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                unknown
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../scheduler.html">LSST Scheduler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../driver.html">Driver API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../history.html">History</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="lsst.ts.scheduler.html">lsst.ts.scheduler package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="lsst.ts.scheduler.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="lsst.ts.scheduler.fields.html">lsst.ts.scheduler.fields package</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">lsst.ts.scheduler.kernel package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-lsst.ts.scheduler.kernel.definitions">lsst.ts.scheduler.kernel.definitions module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-lsst.ts.scheduler.kernel.field">lsst.ts.scheduler.kernel.field module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-lsst.ts.scheduler.kernel">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="lsst.ts.scheduler.proposals.html">lsst.ts.scheduler.proposals package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lsst.ts.scheduler.setup.html">lsst.ts.scheduler.setup package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lsst.ts.scheduler.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lsst.ts.scheduler.html#module-lsst.ts.scheduler.driver">lsst.ts.scheduler.driver module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lsst.ts.scheduler.html#module-lsst.ts.scheduler.main">lsst.ts.scheduler.main module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lsst.ts.scheduler.html#module-lsst.ts.scheduler.version">lsst.ts.scheduler.version module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lsst.ts.scheduler.html#module-lsst.ts.scheduler">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">LSST Scheduler</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="lsst.ts.scheduler.html">lsst.ts.scheduler package</a> &raquo;</li>
+        
+      <li>lsst.ts.scheduler.kernel package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api/lsst.ts.scheduler.kernel.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="lsst-ts-scheduler-kernel-package">
+<h1>lsst.ts.scheduler.kernel package<a class="headerlink" href="#lsst-ts-scheduler-kernel-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-lsst.ts.scheduler.kernel.definitions">
+<span id="lsst-ts-scheduler-kernel-definitions-module"></span><h2>lsst.ts.scheduler.kernel.definitions module<a class="headerlink" href="#module-lsst.ts.scheduler.kernel.definitions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="lsst.ts.scheduler.kernel.definitions.read_conf_file">
+<code class="descclassname">lsst.ts.scheduler.kernel.definitions.</code><code class="descname">read_conf_file</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/kernel/definitions.html#read_conf_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.kernel.definitions.read_conf_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read the new type of configuration file.</p>
+<p>This function reads the new type of configuration file that contains sections. It also
+has the capability to take parameters as math expressions and lists. String entries in
+list parameters do not need to be surrounded by quotes. An example file is shown below:</p>
+<p>[section]
+# Floating point parameter
+var1 = 1.0
+# String parameter
+var2 = help
+# List of strings parameter
+var3 = [good, to, go]
+# List of floats parameter
+var4 = [1, 2, 4]
+# Boolean parameter
+var5 = True
+# Floating point math expression parameter
+var6 = 375. / 30.
+# Set of tuples
+var7 = (test1, 1.0, 30.0), (test2, 4.0, 50.0)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> (<em>str</em>) – The configuration file name.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A dictionary from the configuration file.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="lsst.ts.scheduler.kernel.definitions.conf_file_path">
+<code class="descclassname">lsst.ts.scheduler.kernel.definitions.</code><code class="descname">conf_file_path</code><span class="sig-paren">(</span><em>resource</em>, <em>*paths</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/kernel/definitions.html#conf_file_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.kernel.definitions.conf_file_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find a configuration file in the package.</p>
+<p>This function uses internal knowledge to determine the correct path of a given
+configuration file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>resource</strong> (<em>str</em>) – The name of a module. Usually passed via __name__.</li>
+<li><strong>paths</strong> (<em>set of strs</em>) – A variable length set of strings giving the sub-directories and finally the file name.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The fully qualified path for the given configuration file.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">str</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-lsst.ts.scheduler.kernel.field">
+<span id="lsst-ts-scheduler-kernel-field-module"></span><h2>lsst.ts.scheduler.kernel.field module<a class="headerlink" href="#module-lsst.ts.scheduler.kernel.field" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="lsst.ts.scheduler.kernel.field.Field">
+<em class="property">class </em><code class="descclassname">lsst.ts.scheduler.kernel.field.</code><code class="descname">Field</code><span class="sig-paren">(</span><em>fieldid=0</em>, <em>ra_rad=0.0</em>, <em>dec_rad=0.0</em>, <em>gl_rad=0.0</em>, <em>gb_rad=0.0</em>, <em>el_rad=0.0</em>, <em>eb_rad=0.0</em>, <em>fov_rad=0.0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/kernel/field.html#Field"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.kernel.field.Field" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">future.types.newobject.newobject</span></code></p>
+<dl class="attribute">
+<dt id="lsst.ts.scheduler.kernel.field.Field.dec">
+<code class="descname">dec</code><a class="headerlink" href="#lsst.ts.scheduler.kernel.field.Field.dec" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lsst.ts.scheduler.kernel.field.Field.eb">
+<code class="descname">eb</code><a class="headerlink" href="#lsst.ts.scheduler.kernel.field.Field.eb" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lsst.ts.scheduler.kernel.field.Field.el">
+<code class="descname">el</code><a class="headerlink" href="#lsst.ts.scheduler.kernel.field.Field.el" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lsst.ts.scheduler.kernel.field.Field.fov">
+<code class="descname">fov</code><a class="headerlink" href="#lsst.ts.scheduler.kernel.field.Field.fov" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="lsst.ts.scheduler.kernel.field.Field.from_db_row">
+<em class="property">classmethod </em><code class="descname">from_db_row</code><span class="sig-paren">(</span><em>row</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/kernel/field.html#Field.from_db_row"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.kernel.field.Field.from_db_row" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create instance from a database table row.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>row</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – The database row information to create the instance from.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The instance containing the database row information.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#lsst.ts.scheduler.kernel.field.Field" title="lsst.ts.scheduler.kernel.field.Field"><code class="xref py py-class docutils literal"><span class="pre">Field</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lsst.ts.scheduler.kernel.field.Field.gb">
+<code class="descname">gb</code><a class="headerlink" href="#lsst.ts.scheduler.kernel.field.Field.gb" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsst.ts.scheduler.kernel.field.Field.get_copy">
+<code class="descname">get_copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lsst/ts/scheduler/kernel/field.html#Field.get_copy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lsst.ts.scheduler.kernel.field.Field.get_copy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lsst.ts.scheduler.kernel.field.Field.gl">
+<code class="descname">gl</code><a class="headerlink" href="#lsst.ts.scheduler.kernel.field.Field.gl" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lsst.ts.scheduler.kernel.field.Field.ra">
+<code class="descname">ra</code><a class="headerlink" href="#lsst.ts.scheduler.kernel.field.Field.ra" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-lsst.ts.scheduler.kernel">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-lsst.ts.scheduler.kernel" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="lsst.ts.scheduler.proposals.html" class="btn btn-neutral float-right" title="lsst.ts.scheduler.proposals package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="lsst.ts.scheduler.fields.html" class="btn btn-neutral" title="lsst.ts.scheduler.fields package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Francisco Delgado.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'unknown',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

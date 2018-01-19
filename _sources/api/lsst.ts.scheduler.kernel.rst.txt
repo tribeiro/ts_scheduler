@@ -1,0 +1,30 @@
+lsst\.ts\.scheduler\.kernel package
+===================================
+
+Submodules
+----------
+
+lsst\.ts\.scheduler\.kernel\.definitions module
+-----------------------------------------------
+
+.. automodule:: lsst.ts.scheduler.kernel.definitions
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+lsst\.ts\.scheduler\.kernel\.field module
+-----------------------------------------
+
+.. automodule:: lsst.ts.scheduler.kernel.field
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: lsst.ts.scheduler.kernel
+    :members:
+    :undoc-members:
+    :show-inheritance:

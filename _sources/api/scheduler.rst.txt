@@ -1,0 +1,48 @@
+scheduler package
+=================
+
+Subpackages
+-----------
+
+.. toctree::
+
+    scheduler.fields
+    scheduler.kernel
+    scheduler.proposals
+    scheduler.setup
+
+Submodules
+----------
+
+scheduler\.driver module
+------------------------
+
+.. automodule:: scheduler.driver
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+scheduler\.main module
+----------------------
+
+.. automodule:: scheduler.main
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+scheduler\.version module
+-------------------------
+
+.. automodule:: scheduler.version
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: scheduler
+    :members:
+    :undoc-members:
+    :show-inheritance:

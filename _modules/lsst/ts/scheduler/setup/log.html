@@ -1,0 +1,332 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>lsst.ts.scheduler.setup.log &mdash; LSST Scheduler unknown documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="LSST Scheduler unknown documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> LSST Scheduler
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                unknown
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../scheduler.html">LSST Scheduler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../driver.html">Driver API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../history.html">History</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../api/lsst.ts.scheduler.html">lsst.ts.scheduler package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../index.html">LSST Scheduler</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>lsst.ts.scheduler.setup.log</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for lsst.ts.scheduler.setup.log</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">logging.handlers</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pkg_resources</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;EXTENSIVE&quot;</span><span class="p">,</span> <span class="s2">&quot;TRACE&quot;</span><span class="p">,</span> <span class="s2">&quot;WORDY&quot;</span><span class="p">,</span> <span class="s2">&quot;configure_logging&quot;</span><span class="p">,</span> <span class="s2">&quot;generate_logfile&quot;</span><span class="p">,</span> <span class="s2">&quot;set_log_levels&quot;</span><span class="p">]</span>
+
+<span class="c1"># Extra INFO levels</span>
+<span class="n">WORDY</span> <span class="o">=</span> <span class="mi">15</span>
+<span class="c1"># Extra DEBUG levels</span>
+<span class="n">EXTENSIVE</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">TRACE</span> <span class="o">=</span> <span class="mi">2</span>
+
+<span class="n">DETAIL_LEVEL</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="mi">0</span><span class="p">:</span> <span class="n">logging</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span>
+    <span class="mi">1</span><span class="p">:</span> <span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span>
+    <span class="mi">2</span><span class="p">:</span> <span class="n">WORDY</span><span class="p">,</span>
+    <span class="mi">3</span><span class="p">:</span> <span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span>
+    <span class="mi">4</span><span class="p">:</span> <span class="n">EXTENSIVE</span><span class="p">,</span>
+    <span class="mi">5</span><span class="p">:</span> <span class="n">TRACE</span>
+<span class="p">}</span>
+
+<span class="n">MAX_CONSOLE</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">MIN_FILE</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">MAX_FILE</span> <span class="o">=</span> <span class="mi">5</span>
+
+<div class="viewcode-block" id="generate_logfile"><a class="viewcode-back" href="../../../../../api/lsst.ts.scheduler.setup.html#lsst.ts.scheduler.setup.log.generate_logfile">[docs]</a><span class="k">def</span> <span class="nf">generate_logfile</span><span class="p">(</span><span class="n">basename</span><span class="o">=</span><span class="s2">&quot;scheduler&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Generate a log file name based on current time.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">timestr</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">_%H:%M:%S&quot;</span><span class="p">)</span>
+    <span class="n">log_path</span> <span class="o">=</span> <span class="n">pkg_resources</span><span class="o">.</span><span class="n">resource_filename</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="s2">&quot;../../log&quot;</span><span class="p">)</span>
+    <span class="n">logfilename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">log_path</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">.</span><span class="si">%s</span><span class="s2">.log&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">basename</span><span class="p">,</span> <span class="n">timestr</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">logfilename</span></div>
+
+<div class="viewcode-block" id="configure_logging"><a class="viewcode-back" href="../../../../../api/lsst.ts.scheduler.setup.html#lsst.ts.scheduler.setup.log.configure_logging">[docs]</a><span class="k">def</span> <span class="nf">configure_logging</span><span class="p">(</span><span class="n">options</span><span class="p">,</span> <span class="n">logfilename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">log_port</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">handlers</span><span class="o">.</span><span class="n">DEFAULT_TCP_LOGGING_PORT</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Configure the logging for the system.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    options : argparse.Namespace</span>
+<span class="sd">        The options returned by the ArgumentParser instance.argparse.</span>
+<span class="sd">    logfilename : str</span>
+<span class="sd">        A name, including path, for a log file.</span>
+<span class="sd">    log_port : int, optional</span>
+<span class="sd">        An alternate port for the socket logger.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">console_detail</span><span class="p">,</span> <span class="n">file_detail</span> <span class="o">=</span> <span class="n">set_log_levels</span><span class="p">(</span><span class="n">options</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
+    <span class="n">main_level</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">console_detail</span><span class="p">,</span> <span class="n">file_detail</span><span class="p">)</span>
+
+    <span class="n">log_format</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%(asctime)s</span><span class="s2"> - </span><span class="si">%(levelname)s</span><span class="s2"> - </span><span class="si">%(name)s</span><span class="s2"> - </span><span class="si">%(message)s</span><span class="s2">&quot;</span>
+    <span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">console_format</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">console_format</span> <span class="o">=</span> <span class="n">log_format</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">console_format</span> <span class="o">=</span> <span class="n">options</span><span class="o">.</span><span class="n">console_format</span>
+
+    <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">DETAIL_LEVEL</span><span class="p">[</span><span class="n">main_level</span><span class="p">],</span> <span class="nb">format</span><span class="o">=</span><span class="n">console_format</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">captureWarnings</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="c1"># Remove old console logger as it will double up messages when levels match.</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span><span class="o">.</span><span class="n">removeHandler</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span><span class="o">.</span><span class="n">handlers</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="n">logging</span><span class="o">.</span><span class="n">addLevelName</span><span class="p">(</span><span class="n">WORDY</span><span class="p">,</span> <span class="s1">&#39;WORDY&#39;</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">addLevelName</span><span class="p">(</span><span class="n">EXTENSIVE</span><span class="p">,</span> <span class="s1">&#39;EXTENSIVE&#39;</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">addLevelName</span><span class="p">(</span><span class="n">TRACE</span><span class="p">,</span> <span class="s1">&#39;TRACE&#39;</span><span class="p">)</span>
+
+    <span class="n">ch</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">()</span>
+    <span class="n">ch</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">DETAIL_LEVEL</span><span class="p">[</span><span class="n">console_detail</span><span class="p">])</span>
+    <span class="n">ch</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span><span class="n">console_format</span><span class="p">))</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">scripted</span><span class="p">:</span>
+        <span class="n">socket</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">handlers</span><span class="o">.</span><span class="n">SocketHandler</span><span class="p">(</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="n">log_port</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">socket</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">options</span><span class="o">.</span><span class="n">scripted</span><span class="p">:</span>
+        <span class="n">log_file</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">FileHandler</span><span class="p">(</span><span class="n">logfilename</span><span class="p">)</span>
+        <span class="n">log_file</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span><span class="n">log_format</span><span class="p">))</span>
+        <span class="n">log_file</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">DETAIL_LEVEL</span><span class="p">[</span><span class="n">file_detail</span><span class="p">])</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">log_file</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="set_log_levels"><a class="viewcode-back" href="../../../../../api/lsst.ts.scheduler.setup.html#lsst.ts.scheduler.setup.log.set_log_levels">[docs]</a><span class="k">def</span> <span class="nf">set_log_levels</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Set detail levels for console and file logging systems.</span>
+
+<span class="sd">    This function sets the detail levels for console and file (via socket) logging systems. These</span>
+<span class="sd">    levels are keys into the DETAIL_LEVEL dictionary.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    verbose : int</span>
+<span class="sd">        The requested verbosity level.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    (int, int)</span>
+<span class="sd">        A tuple containing the console detail level and the file detail level respectively.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">console_detail</span> <span class="o">=</span> <span class="n">MAX_CONSOLE</span> <span class="k">if</span> <span class="n">verbose</span> <span class="o">&gt;</span> <span class="n">MAX_CONSOLE</span> <span class="k">else</span> <span class="n">verbose</span>
+
+    <span class="n">file_detail</span> <span class="o">=</span> <span class="n">MIN_FILE</span> <span class="k">if</span> <span class="n">verbose</span> <span class="o">&lt;</span> <span class="n">MIN_FILE</span> <span class="k">else</span> <span class="n">verbose</span>
+    <span class="n">file_detail</span> <span class="o">=</span> <span class="n">MAX_FILE</span> <span class="k">if</span> <span class="n">file_detail</span> <span class="o">&gt;</span> <span class="n">MAX_FILE</span> <span class="k">else</span> <span class="n">file_detail</span>
+
+    <span class="k">return</span> <span class="p">(</span><span class="n">console_detail</span><span class="p">,</span> <span class="n">file_detail</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Francisco Delgado.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'unknown',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

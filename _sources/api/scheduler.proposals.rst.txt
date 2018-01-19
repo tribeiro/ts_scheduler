@@ -1,0 +1,62 @@
+scheduler\.proposals package
+============================
+
+Submodules
+----------
+
+scheduler\.proposals\.area\_distribution module
+-----------------------------------------------
+
+.. automodule:: scheduler.proposals.area_distribution
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+scheduler\.proposals\.proposal module
+-------------------------------------
+
+.. automodule:: scheduler.proposals.proposal
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+scheduler\.proposals\.scripted module
+-------------------------------------
+
+.. automodule:: scheduler.proposals.scripted
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+scheduler\.proposals\.sequence module
+-------------------------------------
+
+.. automodule:: scheduler.proposals.sequence
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+scheduler\.proposals\.subsequence module
+----------------------------------------
+
+.. automodule:: scheduler.proposals.subsequence
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+scheduler\.proposals\.time\_distribution module
+-----------------------------------------------
+
+.. automodule:: scheduler.proposals.time_distribution
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: scheduler.proposals
+    :members:
+    :undoc-members:
+    :show-inheritance:

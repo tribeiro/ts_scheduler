@@ -1,0 +1,469 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>lsst.ts.scheduler.proposals.subsequence &mdash; LSST Scheduler unknown documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="LSST Scheduler unknown documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> LSST Scheduler
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                unknown
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../scheduler.html">LSST Scheduler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../driver.html">Driver API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../history.html">History</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../api/lsst.ts.scheduler.html">lsst.ts.scheduler package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../index.html">LSST Scheduler</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>lsst.ts.scheduler.proposals.subsequence</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for lsst.ts.scheduler.proposals.subsequence</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">object</span>
+<span class="kn">from</span> <span class="nn">lsst.ts.observatory.model</span> <span class="k">import</span> <span class="n">Target</span>
+
+<span class="n">SEQ_IDLE</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">SEQ_ACTIVE</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">SEQ_COMPLETE</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">SEQ_LOST</span> <span class="o">=</span> <span class="mi">3</span>
+
+<div class="viewcode-block" id="Subsequence"><a class="viewcode-back" href="../../../../../api/lsst.ts.scheduler.proposals.html#lsst.ts.scheduler.proposals.subsequence.Subsequence">[docs]</a><span class="k">class</span> <span class="nc">Subsequence</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">propid</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">propid</span> <span class="o">=</span> <span class="n">propid</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">field</span> <span class="o">=</span> <span class="n">field</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_events</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">subsequence_num_events</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_max_missed</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">subsequence_num_max_missed</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">time_interval</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">subsequence_time_interval</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">time_window_start</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">subsequence_time_window_start</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">time_window_max</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">subsequence_time_window_max</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">time_window_end</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">subsequence_time_window_end</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filter_list</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">subsequence_filter_list</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">visits_list</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">subsequence_visits_list</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filter_num_exp_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">filter_num_exp_dict</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filter_exp_times_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">filter_exp_times_dict</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_visits_per_event</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filters_goal_dict</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">dd_exposures</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dd_exptime</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_subevents</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filter_list</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">ix</span><span class="p">,</span> <span class="nb">filter</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filter_list</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">filter</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">filters_goal_dict</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">filters_goal_dict</span><span class="p">[</span><span class="nb">filter</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">filters_goal_dict</span><span class="p">[</span><span class="nb">filter</span><span class="p">]</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_events</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">visits_list</span><span class="p">[</span><span class="n">ix</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">num_visits_per_event</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">visits_list</span><span class="p">[</span><span class="n">ix</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dd_exposures</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">visits_list</span><span class="p">[</span><span class="n">ix</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter_num_exp_dict</span><span class="p">[</span><span class="nb">filter</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dd_exptime</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">visits_list</span><span class="p">[</span><span class="n">ix</span><span class="p">]</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filter_exp_times_dict</span><span class="p">[</span><span class="nb">filter</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">goal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_events</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_visits_per_event</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">visits_list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">visits_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">is_deep_drilling</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dd_visits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_visits_per_event</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dd_filterchanges</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filter_list</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">is_deep_drilling</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dd_visits</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dd_filterchanges</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">subevent_index</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">subevent_num_visits_left</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">visits_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">event_visits_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">all_events_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">obs_events_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mis_events_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">in_deep_drilling</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="o">=</span> <span class="n">Target</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">fieldid</span> <span class="o">=</span> <span class="n">field</span><span class="o">.</span><span class="n">fieldid</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">filter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter_list</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">subevent_index</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">num_exp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter_num_exp_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">filter</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">exp_times</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter_exp_times_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">filter</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">ra_rad</span> <span class="o">=</span> <span class="n">field</span><span class="o">.</span><span class="n">ra_rad</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">dec_rad</span> <span class="o">=</span> <span class="n">field</span><span class="o">.</span><span class="n">dec_rad</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">propid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">propid</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">goal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">goal</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">visits</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">progress</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">sequenceid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">fieldid</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">subsequencename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">groupid</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">groupix</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">is_deep_drilling</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_deep_drilling</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">is_dd_firstvisit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_deep_drilling</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">remaining_dd_visits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dd_visits</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">dd_exposures</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dd_exposures</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">dd_filterchanges</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dd_filterchanges</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">dd_exptime</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dd_exptime</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_state</span><span class="p">()</span>
+
+<div class="viewcode-block" id="Subsequence.restart"><a class="viewcode-back" href="../../../../../api/lsst.ts.scheduler.proposals.html#lsst.ts.scheduler.proposals.subsequence.Subsequence.restart">[docs]</a>    <span class="k">def</span> <span class="nf">restart</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">subevent_index</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">subevent_num_visits_left</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">visits_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">event_visits_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">all_events_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">obs_events_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mis_events_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">in_deep_drilling</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">filter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter_list</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">subevent_index</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">num_exp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter_num_exp_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">filter</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">exp_times</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter_exp_times_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">filter</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">visits</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">progress</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">groupid</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">groupix</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">is_dd_firstvisit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_deep_drilling</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">remaining_dd_visits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dd_visits</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_state</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Subsequence.update_state"><a class="viewcode-back" href="../../../../../api/lsst.ts.scheduler.proposals.html#lsst.ts.scheduler.proposals.subsequence.Subsequence.update_state">[docs]</a>    <span class="k">def</span> <span class="nf">update_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_all_events</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">all_events_list</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_obs_events</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">obs_events_list</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_mis_events</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mis_events_list</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_all_events</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">SEQ_IDLE</span>
+
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_mis_events</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_max_missed</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">SEQ_LOST</span>
+
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_all_events</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_events</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">SEQ_COMPLETE</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">SEQ_ACTIVE</span></div>
+
+<div class="viewcode-block" id="Subsequence.is_idle"><a class="viewcode-back" href="../../../../../api/lsst.ts.scheduler.proposals.html#lsst.ts.scheduler.proposals.subsequence.Subsequence.is_idle">[docs]</a>    <span class="k">def</span> <span class="nf">is_idle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">SEQ_IDLE</span></div>
+
+<div class="viewcode-block" id="Subsequence.is_active"><a class="viewcode-back" href="../../../../../api/lsst.ts.scheduler.proposals.html#lsst.ts.scheduler.proposals.subsequence.Subsequence.is_active">[docs]</a>    <span class="k">def</span> <span class="nf">is_active</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">SEQ_ACTIVE</span></div>
+
+<div class="viewcode-block" id="Subsequence.is_in_deep_drilling"><a class="viewcode-back" href="../../../../../api/lsst.ts.scheduler.proposals.html#lsst.ts.scheduler.proposals.subsequence.Subsequence.is_in_deep_drilling">[docs]</a>    <span class="k">def</span> <span class="nf">is_in_deep_drilling</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_deep_drilling</span></div>
+
+<div class="viewcode-block" id="Subsequence.is_idle_or_active"><a class="viewcode-back" href="../../../../../api/lsst.ts.scheduler.proposals.html#lsst.ts.scheduler.proposals.subsequence.Subsequence.is_idle_or_active">[docs]</a>    <span class="k">def</span> <span class="nf">is_idle_or_active</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">SEQ_IDLE</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">SEQ_ACTIVE</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Subsequence.is_complete"><a class="viewcode-back" href="../../../../../api/lsst.ts.scheduler.proposals.html#lsst.ts.scheduler.proposals.subsequence.Subsequence.is_complete">[docs]</a>    <span class="k">def</span> <span class="nf">is_complete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">SEQ_COMPLETE</span></div>
+
+<div class="viewcode-block" id="Subsequence.is_lost"><a class="viewcode-back" href="../../../../../api/lsst.ts.scheduler.proposals.html#lsst.ts.scheduler.proposals.subsequence.Subsequence.is_lost">[docs]</a>    <span class="k">def</span> <span class="nf">is_lost</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">SEQ_LOST</span></div>
+
+<div class="viewcode-block" id="Subsequence.get_next_target"><a class="viewcode-back" href="../../../../../api/lsst.ts.scheduler.proposals.html#lsst.ts.scheduler.proposals.subsequence.Subsequence.get_next_target">[docs]</a>    <span class="k">def</span> <span class="nf">get_next_target</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">filter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter_list</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">subevent_index</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">num_exp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter_num_exp_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">filter</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">exp_times</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter_exp_times_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">filter</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">groupid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_all_events</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">groupix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">subevent_index</span> <span class="o">+</span> <span class="mi">1</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">target</span></div>
+
+<div class="viewcode-block" id="Subsequence.get_next_filter_list"><a class="viewcode-back" href="../../../../../api/lsst.ts.scheduler.proposals.html#lsst.ts.scheduler.proposals.subsequence.Subsequence.get_next_filter_list">[docs]</a>    <span class="k">def</span> <span class="nf">get_next_filter_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="n">filter_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filter_list</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">filter_list</span></div>
+
+<div class="viewcode-block" id="Subsequence.time_window"><a class="viewcode-back" href="../../../../../api/lsst.ts.scheduler.proposals.html#lsst.ts.scheduler.proposals.subsequence.Subsequence.time_window">[docs]</a>    <span class="k">def</span> <span class="nf">time_window</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">SEQ_IDLE</span><span class="p">:</span>
+            <span class="n">need</span> <span class="o">=</span> <span class="mf">0.1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">deltaT</span> <span class="o">=</span> <span class="n">time</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_events_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">ndeltaT</span> <span class="o">=</span> <span class="n">deltaT</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_interval</span>
+            <span class="k">if</span> <span class="n">ndeltaT</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_window_start</span><span class="p">:</span>
+                <span class="n">need</span> <span class="o">=</span> <span class="mf">0.0</span>
+            <span class="k">elif</span> <span class="n">ndeltaT</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_window_max</span><span class="p">:</span>
+                <span class="n">need</span> <span class="o">=</span> <span class="p">(</span><span class="n">ndeltaT</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_window_start</span><span class="p">)</span> <span class="o">/</span>\
+                       <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">time_window_max</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_window_start</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">ndeltaT</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_window_end</span><span class="p">:</span>
+                <span class="n">need</span> <span class="o">=</span> <span class="mf">1.0</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">need</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.0</span>
+
+        <span class="k">return</span> <span class="n">need</span></div>
+
+<div class="viewcode-block" id="Subsequence.miss_observation"><a class="viewcode-back" href="../../../../../api/lsst.ts.scheduler.proposals.html#lsst.ts.scheduler.proposals.subsequence.Subsequence.miss_observation">[docs]</a>    <span class="k">def</span> <span class="nf">miss_observation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time</span><span class="p">):</span>
+
+        <span class="c1"># miss event</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">all_events_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">time</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mis_events_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">time</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">in_deep_drilling</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="c1"># update state</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_state</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_lost</span><span class="p">():</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_deep_drilling</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">visits</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">remaining_dd_visits</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">visits</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">progress</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">visits</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">goal</span>
+
+        <span class="c1"># reset to first subevent</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">subevent_index</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">subevent_num_visits_left</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">visits_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">event_visits_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_deep_drilling</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">is_dd_firstvisit</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">remaining_dd_visits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dd_visits</span></div>
+
+<div class="viewcode-block" id="Subsequence.register_observation"><a class="viewcode-back" href="../../../../../api/lsst.ts.scheduler.proposals.html#lsst.ts.scheduler.proposals.subsequence.Subsequence.register_observation">[docs]</a>    <span class="k">def</span> <span class="nf">register_observation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">event_visits_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">time</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">visits</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">progress</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">visits</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">goal</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">subevent_num_visits_left</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_deep_drilling</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">remaining_dd_visits</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">is_dd_firstvisit</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">in_deep_drilling</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">subevent_num_visits_left</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># subevent is complete</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">subevent_index</span> <span class="o">==</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_subevents</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="c1"># event is complete</span>
+                <span class="c1"># observation is recorded with first visit timestamp</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">all_events_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">event_visits_list</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">obs_events_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">event_visits_list</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="c1"># reset to first subevent</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">subevent_index</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">subevent_num_visits_left</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">visits_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">event_visits_list</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_deep_drilling</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">is_dd_firstvisit</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">in_deep_drilling</span> <span class="o">=</span> <span class="kc">False</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">remaining_dd_visits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dd_visits</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># advance to next subevent</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">subevent_index</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">subevent_num_visits_left</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">visits_list</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">subevent_index</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_state</span><span class="p">()</span></div></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Francisco Delgado.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'unknown',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

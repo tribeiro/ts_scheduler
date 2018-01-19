@@ -1,16 +1,48 @@
-lsst\.ts\.scheduler
-===================
+lsst\.ts\.scheduler package
+===========================
+
+Subpackages
+-----------
+
+.. toctree::
+
+    lsst.ts.scheduler.fields
+    lsst.ts.scheduler.kernel
+    lsst.ts.scheduler.proposals
+    lsst.ts.scheduler.setup
+
+Submodules
+----------
+
+lsst\.ts\.scheduler\.driver module
+----------------------------------
+
+.. automodule:: lsst.ts.scheduler.driver
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+lsst\.ts\.scheduler\.main module
+--------------------------------
+
+.. automodule:: lsst.ts.scheduler.main
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+lsst\.ts\.scheduler\.version module
+-----------------------------------
+
+.. automodule:: lsst.ts.scheduler.version
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
 
 .. automodule:: lsst.ts.scheduler
-
-   
-   
-   
-
-   
-   
-   
-
-   
-   
-   
+    :members:
+    :undoc-members:
+    :show-inheritance:
